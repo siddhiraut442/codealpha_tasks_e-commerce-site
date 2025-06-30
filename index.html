@@ -106,7 +106,7 @@ function updateCart(newCart) {
   const cartKey = user.userId ? `cart_${user.userId}` : 'guest_cart';
   localStorage.setItem(cartKey, JSON.stringify(newCart));
 
-  // Trigger cart update in all tabs
+  
   window.dispatchEvent(new Event('cartUpdated'));
 }
 
@@ -135,7 +135,7 @@ function addToCart(name, price, image = '', id = null) {
     cart.push({ name, price, quantity: 1, image, id });
   }
 
-  updateCart(cart); // Save & notify
+  updateCart(cart); 
   showToast(`${name} added to your cart.`);
 }
 
@@ -162,7 +162,7 @@ function addToCart(name, price, image = '', id = null) {
       return data;
     })
     .then(data => {
-      // Store user data
+      
       const user = { email, userId: data.userId };
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("user", JSON.stringify(user));
