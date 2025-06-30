@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In and Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #9face6);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .wrapper {
+      display: flex;
+      gap: 40px;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+
+    .form-box {
+      width: 280px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Sign In Form -->
+    <div class="form-box">
+      <h2>Sign In</h2>
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <button onclick="login()">Sign In</button>
+      <div id="login-message" class="message"></div>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box">
+      <h2>Register</h2>
+      <input type="email" id="register-email" placeholder="Email" />
+      <input type="password" id="register-password" placeholder="Password" />
+      <button onclick="register()">Register</button>
+      <div id="register-message" class="message"></div>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+      const msgBox = document.getElementById("login-message");
+
+      if (!email || !password) {
+        msgBox.textContent = "Please fill in all fields.";
+        msgBox.className = "message error";
+        return;
+      }
+
+      fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+      .then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        return data;
+      })
+      .then(data => {
+        localStorage.setItem("user", JSON.stringify({ email, userId: data.userId }));
+        msgBox.textContent = "Login successful!";
+        msgBox.className = "message success";
+        setTimeout(() => window.location.href = "index.html", 1000);
+      })
+      .catch(err => {
+        msgBox.textContent = err.message;
+        msgBox.className = "message error";
+      });
+    }
+
+    function register() {
+      const email = document.getElementById("register-email").value.trim();
+      const password = document.getElementById("register-password").value.trim();
+      const msgBox = document.getElementById("register-message");
+
+      if (!email || !password) {
+        msgBox.textContent = "Please fill in all fields.";
+        msgBox.className = "message error";
+        return;
+      }
+
+      fetch("http://localhost:3000/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+      .then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        return data;
+      })
+      .then(data => {
+        localStorage.setItem("user", JSON.stringify({ email, userId: data.userId }));
+        msgBox.textContent = "Registered successfully!";
+        msgBox.className = "message success";
+        setTimeout(() => window.location.href = "index.html", 1000);
+      })
+      .catch(err => {
+        msgBox.textContent = err.message;
+        msgBox.className = "message error";
+      });
+    }
+  </script>
+
+</body>
+</html>

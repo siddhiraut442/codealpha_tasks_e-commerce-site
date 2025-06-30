@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fashion Trends</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: start;
+      padding: 20px 0 10px;
+      color: #333;
+    }
+
+    .product-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 20px;
+  align-items: flex-start; /* Add this line */
+}
+
+.product-box {
+  background-color: white;
+  width: 23%;
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  display: flex; /* Add these lines */
+  flex-direction: column;
+  min-height: 0; /* Important for flex children */
+}
+
+.product-info {
+  padding: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+  flex: 1; /* Makes the info section take available space */
+  min-height: 0; /* Important for flex children */
+}
+
+    /* .product-box:hover {
+      transform: scale(1.03);
+    } */
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f4f4f4;
+    }
+
+    
+    .product-info h2 {
+      font-size: 16px;
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    .delivery {
+      color: green;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin: 40px 0 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      color: #0052a3;
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-box {
+        width: 90%;
+      }
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 1000;
+      bottom: 30px;
+      right: 30px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view-details-btn:hover {
+  background-color: #116313;
+}
+.btn-cart {
+  flex: 1;
+  background-color: #ffa41c; /* orange */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+  background-color: #f08804;
+}
+
+.btn-details {
+  flex: 1;
+  background-color: #22a63a; 
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #095f30;
+}
+
+  .product-extra {
+    transition: all 0.3s ease;
+  }
+
+  .product-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .product-info ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .toast {
+  /* ... existing styles ... */
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.toast.warning {
+  background-color: #ff9800 !important;
+}
+
+.toast.success {
+  background-color: #4CAF50 !important;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <h2>Women's Clothing</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/81KTGOTzc+L._SY879_.jpg" class="product-img" alt="kurti">
+      <div class="product-info">
+        <h2>Pink Short Kurti</h2>
+        <p>Amazon Brand - Myx Women's Cotton Printed A-line Short Kurti</p>
+        <p class="price">₹449</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Pink Short Kurti', 449)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> 100% Cotton Cambric</li>
+          <li><strong>Sleeve:</strong> 3/4 Sleeve</li>
+          <li><strong>Length:</strong> Waist Length</li>
+          <li><strong>Neck:</strong> Mandarin Neck</li>
+          <li><strong>Pattern:</strong> Printed Design</li>
+          <li><strong>Style:</strong> Single (Regular Fit)</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Breathable cotton fabric</li>
+              <li>Comfortable 3/4 sleeves</li>
+              <li>Elegant mandarin collar</li>
+              <li>Printed pattern</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong>
+            <ul>
+              <li>Machine wash cold</li>
+              <li>Iron on low heat</li>
+              <li>Do not bleach</li>
+            </ul>
+          </li>
+          <li><strong>Occasion:</strong> Casual, Office, Daily Wear</li>
+          <li><strong>Country of Origin:</strong> India</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Cotton Cambric Top">
+        ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">178</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Cotton Cambric Top">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61fY5oDJDsL._SY879_.jpg" class="product-img" alt="blazer">
+      <div class="product-info">
+        <h2>Blazer</h2>
+        <p>ROCKSY Smart Casual Formal Blazer for Women, Regular Fit Stylish Blazer for Women</p>
+        <p class="price">₹939</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Blazer', 939)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> 75% Cotton, 25% Polyester</li>
+          <li><strong>Style:</strong> Single-Breasted</li>
+          <li><strong>Closure:</strong> Button Front</li>
+          <li><strong>Care:</strong> Machine Washable</li>
+          <li><strong>Blend Benefits:</strong>
+            <ul>
+              <li>Cotton for breathability</li>
+              <li>Polyester for durability</li>
+              <li>Wrinkle-resistant</li>
+              <li>Easy maintenance</li>
+            </ul>
+          </li>
+          <li><strong>Design Features:</strong>
+            <ul>
+              <li>Classic single-breasted cut</li>
+              <li>Regular fit</li>
+              <li>Versatile styling</li>
+            </ul>
+          </li>
+          <li><strong>Occasion:</strong> Casual, Office, Everyday Wear</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Ideal For:</strong> Men looking for comfortable daily wear</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Cotton-Polyester Shirt">
+        ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">245</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Cotton-Polyester Shirt">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71nk9qGQejL._SY879_.jpg" class="product-img" alt="blue maxi">
+      <div class="product-info">
+        <h2>Blue Dress</h2>
+        <p>ILLI LONDON Women's A-LINE Maxi Dress</p>
+        <p class="price">₹799</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Blue Dress', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> Premium Polyester</li>
+          <li><strong>Length:</strong> Maxi (Floor-length)</li>
+          <li><strong>Occasion:</strong> Weddings, Parties, Special Events</li>
+          <li><strong>Sleeve:</strong> Elegant Long Sleeves</li>
+          <li><strong>Pattern:</strong> Floral Print</li>
+          <li><strong>Silhouette:</strong> Flattering A-Line Cut</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Wrinkle-resistant fabric</li>
+              <li>Comfortable stretch</li>
+              <li>Breathable material</li>
+              <li>Flowy maxi design</li>
+            </ul>
+          </li>
+          <li><strong>Design Elements:</strong>
+            <ul>
+              <li>Fitted bodice</li>
+              <li>Flared skirt</li>
+              <li>All-over floral pattern</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Machine wash cold, hang dry</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Perfect For:</strong> Wedding guests, parties, festive occasions</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Floral Maxi Dress">
+        ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">342</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Floral Maxi Dress">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51o02XLvMkL._SX679_.jpg" class="product-img" alt="co-ord set">
+      <div class="product-info">
+        <h2>Coord Set</h2>
+        <p>Women's Summer wear Jumpsuit||Coord Set - Stylish and Comfortable, Perfect for Casual Wear or Daily Outings Cotton Fabric for Softness and Breathability, Trendy Design</p>
+        <p class="price">₹649</p>
+        <p class="delivery">Delivery by Mon, 17 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Coord Set', 649)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> 100% Cotton</li>
+          <li><strong>Fit:</strong> Regular Fit</li>
+          <li><strong>Style:</strong> Casual Everyday Wear</li>
+          <li><strong>Closure:</strong> Button Front</li>
+          <li><strong>Care:</strong> Hand Wash Only</li>
+          <li><strong>Size:</strong> Adult Sizes Available</li>
+          <li><strong>Key Benefits:</strong>
+            <ul>
+              <li>Breathable cotton fabric</li>
+              <li>Comfortable regular fit</li>
+              <li>Versatile casual styling</li>
+              <li>Classic button-down design</li>
+            </ul>
+          </li>
+          <li><strong>Design Features:</strong>
+            <ul>
+              <li>Point collar</li>
+              <li>Standard length</li>
+              <li>Barrel cuffs</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Ideal For:</strong> Daily wear, casual outings, office casual</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Cotton Casual Shirt">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">287</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Cotton Casual Shirt">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Men's Clothing</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61GtS6IrR7L._SY879_.jpg" class="product-img" alt="white shirt">
+      <div class="product-info">
+        <h2>White Shirt</h2>
+        <p>Symbol Men's Solid Cotton Formal Shirt | Plain | Full Sleeve - Regular Fit (Available in Plus Size and Combo Packs)</p>
+        <p class="price">₹1299</p>
+        <p class="delivery">Delivery by Thu, 20 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('White Shirt', 1299)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> 100% Premium Cotton</li>
+          <li><strong>Pattern:</strong> Solid Color</li>
+          <li><strong>Fit:</strong> Regular Fit (True to size)</li>
+          <li><strong>Sleeve:</strong> Long Sleeve</li>
+          <li><strong>Collar:</strong> Classic Point Collar</li>
+          <li><strong>Length:</strong> Standard Shirt Length</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Breathable all-cotton fabric</li>
+              <li>Versatile solid color</li>
+              <li>Comfortable regular fit</li>
+              <li>Durable construction</li>
+            </ul>
+          </li>
+          <li><strong>Design Details:</strong>
+            <ul>
+              <li>Button-front closure</li>
+              <li>Barrel cuffs</li>
+              <li>Curved hem</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Machine wash cold, tumble dry low</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Perfect For:</strong> Office wear, casual outings, formal occasions</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Classic Cotton Shirt">
+        ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">324</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Classic Cotton Shirt">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61-dd2bOloL._SY879_.jpg" class="product-img" alt="men's t-shirt">
+      <div class="product-info">
+        <h2>Green T-Shirt</h2>
+        <p>Peter England Men's Regular Fit Insignia Half Sleeve Polo T-Shirt | Cotton Rich | Premium Pique Weave</p>
+        <p class="price">₹799</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Green T-Shirt', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> 60% Polyester, 40% Cotton</li>
+          <li><strong>Pattern:</strong> Solid Color</li>
+          <li><strong>Fit:</strong> Regular Fit</li>
+          <li><strong>Sleeve:</strong> Comfortable Half Sleeve</li>
+          <li><strong>Collar:</strong> Classic Polo Collar</li>
+          <li><strong>Length:</strong> Standard Length</li>
+          <li><strong>Blend Benefits:</strong>
+            <ul>
+              <li>Polyester for durability</li>
+              <li>Cotton for breathability</li>
+              <li>Wrinkle-resistant</li>
+              <li>Easy maintenance</li>
+            </ul>
+          </li>
+          <li><strong>Design Features:</strong>
+            <ul>
+              <li>Buttoned placket</li>
+              <li>Ribbed collar</li>
+              <li>Side vents</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Machine washable</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Ideal For:</strong> Casual wear, outings, semi-formal occasions</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Poly-Cotton Polo">
+        ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">298</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Poly-Cotton Polo">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61Chb1dL6+L._SY879_.jpg" class="product-img" alt="Grey jeans.png">
+      <div class="product-info">
+        <h2>Grey Jeans</h2>
+        <p>Symbol Premium Men's Slim Fit Stretchable Jeans | Casual Denim | Cotton Stretch | Fashion Shades of Black & Blue (Available in Plus Size)</p>
+        <p class="price">₹1800</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Grey Jeans', 1800)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Material:</strong> Premium Polyester Blend</li>
+          <li><strong>Length:</strong> Modern Ankle Length</li>
+          <li><strong>Style:</strong> Tailored Formal Pants</li>
+          <li><strong>Closure:</strong> Button + Zipper Fly</li>
+          <li><strong>Occasion:</strong> Formal & Smart Casual</li>
+          <li><strong>Care:</strong> Machine Washable</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Wrinkle-resistant fabric</li>
+              <li>Comfortable stretch</li>
+              <li>Tailored fit</li>
+              <li>Modern ankle cut</li>
+            </ul>
+          </li>
+          <li><strong>Design Elements:</strong>
+            <ul>
+              <li>Flat front design</li>
+              <li>Belt loops</li>
+              <li>Back pockets</li>
+              <li>Side pockets</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Perfect For:</strong> Office wear, business meetings, smart casual events</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Formal Blend Pants">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">412</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Formal Blend Pants">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/81H0WKUbUCL._SX679_.jpg" class="product-img" alt="black jacket">
+      <div class="product-info">
+        <h2>Black Jacket</h2>
+        <p>AWG ALL WEATHER GEAR Men's Winter Jacket - Stylish Sports Gym Cotton Sweatshirt With Zip for Bike Riding</p>
+        <p class="price">₹1500</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Black Jacket', 1500)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> —</li>
+      <li><strong>Skin Type:</strong> —</li>
+      <li><strong>Hair Type:</strong> —</li>
+      <li><strong>Product Benefits:</strong> —</li>
+      <li><strong>Use for:</strong> —</li>
+      <li><strong>Scent:</strong> —</li>
+      <li><strong>Special Ingredients:</strong> —</li>
+      <li><strong>Item Form:</strong> —</li>
+      <li><strong>Material Feature:</strong> —</li>
+      <li><strong>Active Ingredients:</strong> —</li>
+      <li><strong>Item Weight:</strong> —</li>
+      <li><strong>Item Dimensions:</strong> —</li>
+      <li><strong>Age Range:</strong> —</li>
+      <li><strong>Item Package Quantity:</strong> —</li>
+      <li><strong>Net Quantity:</strong> —</li>
+      <li><strong>Item Volume:</strong> —</li>
+      <li><strong>Special Feature:</strong> —</li>
+      <li><strong>Finish Type:</strong> —</li>
+      <li><strong>Coverage:</strong> —</li>
+      <li><strong>Colour:</strong> —</li>
+      <li><strong>Material Composition:</strong> Rich Cotton</li>
+      <li><strong>Style:</strong> Regular Jacket</li>
+      <li><strong>Fit Type:</strong> Regular</li>
+      <li><strong>Length:</strong> Standard Length</li>
+      <li><strong>Pattern:</strong> Solid</li>
+      <li><strong>Care Instructions:</strong> Machine Wash</li>
+      <li><strong>Country of Origin:</strong> India</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Regular Jacket - Rich Cotton">
+    ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">88</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Regular Jacket - Rich Cotton">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+<h2>Kid's Wear</h2>
+<div class="product-section">
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/51GGS8X9piL.jpg" class="product-img" alt="kids clothes">
+    <div class="product-info">
+      <h2>Girls'Top</h2>
+      <p>KIROTO Girls Mickey Top Stylish Girls Kids Top Fancy Kids Top Puff Full Sleeve</p>
+      <p class="price">₹599</p>
+      <p class="delivery">Delivery by Wed, 19 June</p>
+    <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Girls Mickey Top ', 599)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> —</li>
+      <li><strong>Skin Type:</strong> —</li>
+      <li><strong>Hair Type:</strong> —</li>
+      <li><strong>Product Benefits:</strong> —</li>
+      <li><strong>Use for:</strong> —</li>
+      <li><strong>Scent:</strong> —</li>
+      <li><strong>Special Ingredients:</strong> —</li>
+      <li><strong>Item Form:</strong> —</li>
+      <li><strong>Material Feature:</strong> —</li>
+      <li><strong>Active Ingredients:</strong> —</li>
+      <li><strong>Item Weight:</strong> —</li>
+      <li><strong>Item Dimensions:</strong> —</li>
+      <li><strong>Age Range:</strong> —</li>
+      <li><strong>Item Package Quantity:</strong> —</li>
+      <li><strong>Net Quantity:</strong> —</li>
+      <li><strong>Item Volume:</strong> —</li>
+      <li><strong>Special Feature:</strong> —</li>
+      <li><strong>Finish Type:</strong> —</li>
+      <li><strong>Coverage:</strong> —</li>
+      <li><strong>Colour:</strong> —</li>
+      <li><strong>Material Composition:</strong> Cotton Blend</li>
+      <li><strong>Style:</strong> —</li>
+      <li><strong>Fit Type:</strong> Relaxed Fit</li>
+      <li><strong>Length:</strong> Standard Length</li>
+      <li><strong>Pattern:</strong> Solid</li>
+      <li><strong>Sleeve Type:</strong> Puff Sleeve</li>
+      <li><strong>Neck Style:</strong> High Neck</li>
+      <li><strong>Care Instructions:</strong> —</li>
+      <li><strong>Country of Origin:</strong> India</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Cotton Blend Top - High Neck">
+    ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">75</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Cotton Blend Top - High Neck">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/41HFCTJOIuL.jpg" class="product-img" alt="polo t-shirt">
+    <div class="product-info">
+      <h2>Polo T-Shirt</h2>
+      <p>Aventura Boys' Polo T-Shirt & Shorts Set 100% Cotton Bio-Washed Fabric Age 5-12 Years</p>
+      <p class="price">₹700</p>
+      <p class="delivery">Delivery by Tue, 18 June</p>
+  <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Polo T-Shirt', 700)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> —</li>
+      <li><strong>Material Type:</strong> Cotton</li>
+      <li><strong>Style:</strong> Casual</li>
+      <li><strong>Closure Type:</strong> Button</li>
+      <li><strong>Care Instructions:</strong> Machine Wash</li>
+      <li><strong>Age Range:</strong> Kid</li>
+      <li><strong>Sleeve Type:</strong> Half Sleeve</li>
+      <li><strong>Country of Origin:</strong> India</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Kid's Cotton Casual Shirt">
+    ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">63</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Kid's Cotton Casual Shirt">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71MSq8Ti1JL._SX679_.jpg" class="product-img" alt="Lehenga">
+    <div class="product-info">
+      <h2>Lehenga Choli</h2>
+    <p>Stanwells Kids Girls Orange & Magenta Mirror Work Flared Net Sleeveless Lehenga Choli Set Pattupavadai for Girls</p>
+      <p class="price">₹1500</p>
+      <p class="delivery">Delivery by Fri, 21 June</p>
+     <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Lehenga Choli', 1500)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> —</li>
+      <li><strong>Material Composition:</strong> 40% Nylon, 40% Cotton & 20% Polyester</li>
+      <li><strong>Weave Type:</strong> Jacquard</li>
+      <li><strong>Finish Type:</strong> Readymade</li>
+      <li><strong>Pattern:</strong> Solid</li>
+      <li><strong>Care Instructions:</strong> Hand Wash Only</li>
+      <li><strong>Length:</strong> Maxi</li>
+      <li><strong>Country of Origin:</strong> India</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Jacquard Maxi Dress">
+    ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">58</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Jacquard Maxi Dress">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/51T5XtUpc-L._SY879_.jpg" class="product-img" alt="girl's jeans.jpg">
+    <div class="product-info">
+      <h2>Blue Jeans</h2>
+      <p>Allen Solly Girl's Regular Fit Mid Rise Jeans</p>
+      <p class="price">₹799</p>
+      <p class="delivery">Delivery by Mon, 17 June</p>
+   <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Allen Solly Girls Jeans', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> —</li>
+      <li><strong>Material Type:</strong> Cotton Blend</li>
+      <li><strong>Style:</strong> Classic</li>
+      <li><strong>Closure Type:</strong> Button</li>
+      <li><strong>Care Instructions:</strong> Hand Wash Only</li>
+      <li><strong>Fit Type:</strong> Regular</li>
+      <li><strong>Rise Style:</strong> Mid Rise</li>
+      <li><strong>Country of Origin:</strong> India</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Classic Mid Rise Bottomwear">
+    ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">69</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Classic Mid Rise Bottomwear">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+<a class="back-link" href="homepage.html">← Back to Home</a>
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+ 
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function isUserLoggedIn() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null;
+  }
+
+  function showToast(message, type = "warning") {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => {
+      toast.className = "toast";
+    }, 3000);
+  }
+
+  
+</script>
+<script>
+  function isUserLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+  }
+
+  function showToast(message, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 3000);
+  }
+
+  function addToCart(productName, price) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn !== "true") {
+    showToast("Please login first to add items to cart", "warning");
+    
+    // Redirect to signin after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+
+    return false;
+  }
+
+  // Proceed to add to cart if logged in
+  showToast(`${productName} added to cart`, "success");
+  return true;
+}
+
+
+</script>
+<script>
+  function toggleDetails(button) {
+  const productBox = button.closest(".product-box");
+  const extra = productBox.querySelector(".product-extra");
+
+  if (extra.style.display === "none" || extra.style.display === "") {
+    // Close all other open details first
+    document.querySelectorAll(".product-extra").forEach(item => {
+      if (item !== extra) {
+        item.style.display = "none";
+        const otherBtn = item.closest(".product-box").querySelector(".btn-details");
+        if (otherBtn) otherBtn.textContent = "View Details";
+      }
+    });
+
+    extra.style.display = "block";
+    button.textContent = "Hide Details";
+  } else {
+    extra.style.display = "none";
+    button.textContent = "View Details";
+  }
+}
+
+  
+
+  function submitRating(select) {
+    const rating = parseInt(select.value);
+    const name = select.dataset.name;
+    if (!rating || !name) return;
+
+    alert(`You rated "${name}" ${rating} stars.`);
+    // Here you'd update average/count via backend or localStorage
+  }
+</script>
+
+<script>
+  function submitRating(select) {
+    const productName = select.getAttribute('data-name');
+    const rating = parseInt(select.value);
+    if (!rating || rating < 1 || rating > 5) return;
+
+    // Load current ratings
+    const storedRatings = JSON.parse(localStorage.getItem('ratings')) || {};
+    if (!storedRatings[productName]) {
+      storedRatings[productName] = [];
+    }
+
+    storedRatings[productName].push(rating);
+    localStorage.setItem('ratings', JSON.stringify(storedRatings));
+
+    updateRatingDisplay(productName);
+    alert("Thank you for your feedback!");
+  }
+
+  function updateRatingDisplay(productName) {
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    const productRatings = ratings[productName] || [];
+
+    const avg = productRatings.length
+      ? (productRatings.reduce((a, b) => a + b) / productRatings.length).toFixed(1)
+      : "0";
+
+    document.querySelectorAll(`.rating-display[data-name="${productName}"]`).forEach(display => {
+      display.querySelector('.avg-rating').innerText = avg;
+      display.querySelector('.rating-count').innerText = productRatings.length;
+    });
+  }
+
+  // Call on page load for each product (e.g., Jeans)
+  document.addEventListener("DOMContentLoaded", () => {
+    updateRatingDisplay("Jeans");
+  });
+</script> 
+</body>
+</html>

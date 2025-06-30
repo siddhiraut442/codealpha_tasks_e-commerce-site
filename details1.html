@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clothes</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: start;
+      padding: 20px 0 10px;
+      color: #333;
+    }
+
+    .product-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start; 
+  padding: 20px;
+}
+
+
+    .product-box {
+      background-color: white;
+      width: 23%;
+      margin: 10px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    /* .product-box:hover {
+      transform: scale(1.03);
+    } */
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f4f4f4;
+    }
+
+    .product-info {
+      padding: 15px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .product-info h2 {
+      font-size: 16px;
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    .delivery {
+      color: green;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin: 40px 0 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      color: #0052a3;
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-box {
+        width: 90%;
+      }
+    }
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 1000;
+      bottom: 30px;
+      right: 30px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view-details-btn:hover {
+  background-color: #116313;
+}
+.btn-cart {
+  flex: 1;
+  background-color: #ffa41c; /* orange */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+  background-color: #f08804;
+}
+
+.btn-details {
+  flex: 1;
+  background-color: #22a63a; 
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #095f30;
+}
+
+  .product-extra {
+    transition: all 0.3s ease;
+  }
+
+  .product-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .product-info ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+</style>
+
+
+  </style>
+</head>
+<body>
+
+  <h2>Men's Wear</h2>
+  <div class="product-section">
+    <!-- First 4 -->
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61hgttFuDVL._SX679_.jpg" class="product-img" alt="Garbage Bags">
+      <div class="product-info">
+        <h2>U.S. POLO T-Shirt</h2>
+        <p>U.S. POLO ASSN. Men's Cotton Regular Fit T-Shirt</p>
+        <p class="price">₹1186</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+  <button class="btn-cart" onclick="addToCart('U.S POLO T-SHIRT', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material composition:</strong> Cotton</li>
+    <li><strong>Pattern:</strong> Solid</li>
+    <li><strong>Fit type:</strong> Regular Fit</li>
+    <li><strong>Sleeve type:</strong> Short Sleeve</li>
+    <li><strong>Collar style:</strong> Polo Collar</li>
+    <li><strong>Length:</strong> Standard Length</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Polo T-Shirt">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Polo T-Shirt" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51U+kblDGOL._SY879_.jpg" class="product-img" alt="Weighing Machine">
+      <div class="product-info">
+        <h2>Louis Philipe Red Shirt</h2>
+        <p>Louis Philippe Men's Cotton Solid Slim Fit Shirt</p>
+        <p class="price">₹1099</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+  <button class="btn-cart" onclick="addToCart('Jeans', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material composition:</strong> 62% Cotton, 33% Polyester and 5% Spandex</li>
+    <li><strong>Fit type:</strong> Slim Fit</li>
+    <li><strong>Sleeve type:</strong> Long Sleeve</li>
+    <li><strong>Collar style:</strong> Spread Collar</li>
+    <li><strong>Neck style:</strong> Collared Neck</li>
+    <li><strong>Style:</strong> Modern</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Slim Fit Shirt">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Slim Fit Shirt" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/718iPTsp3xL._SY879_.jpg" class="product-img" alt="Hooks">
+      <div class="product-info">
+        <h2>Blue Jeans</h2>
+        <p>Symbol Premium Men's Cotton Stretch Jeans (Regular Fit)</p>
+        <p class="price">₹1499</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+  <button class="btn-cart" onclick="addToCart('Jeans', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material type:</strong> Cotton Blend</li>
+    <li><strong>Length:</strong> Standard Length</li>
+    <li><strong>Style:</strong> Regular Fit Jeans</li>
+    <li><strong>Closure type:</strong> Button</li>
+    <li><strong>Occasion type:</strong> Casual</li>
+    <li><strong>Care instructions:</strong> Machine Wash</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Regular Fit Jeans">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Regular Fit Jeans" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71irIr-zduL._SY879_.jpg" class="product-img" alt="Water Bottle">
+      <div class="product-info">
+        <h2>Trousers</h2>
+        <p>Beyoung Cotton Regular Fit Chino Pants for Men | Casual Pants | D Pockets | Chino Trousers</p>
+        <p class="price">₹899</p>
+        <p class="delivery">Delivery by Mon, 17 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+  <button class="btn-cart" onclick="addToCart('Jeans', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material type:</strong> Cotton Blend</li>
+    <li><strong>Length:</strong> Standard Length</li>
+    <li><strong>Style:</strong> Chino</li>
+    <li><strong>Closure type:</strong> Button</li>
+    <li><strong>Occasion type:</strong> Casual Wear</li>
+    <li><strong>Care instructions:</strong> Machine Wash</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Chino Pants">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Chino Pants" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  <h2>Women's Wear</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71-rspZtsgL._SY879_.jpg" class="product-img" alt="Necklace">
+      <div class="product-info">
+        <h2>Pink Dress</h2>
+        <p>Max Women's Fit and Flare Knee Length Dress</p>
+        <p class="price">₹799</p>
+        <p class="delivery">Delivery by Thu, 20 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+  <button class="btn-cart" onclick="addToCart('Pink dress', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material type:</strong> Rayon</li>
+    <li><strong>Length:</strong> Midi</li>
+    <li><strong>Occasion type:</strong> Casual</li>
+    <li><strong>Sleeve type:</strong> Short Sleeve</li>
+    <li><strong>Pattern:</strong> Floral</li>
+    <li><strong>Style:</strong> Classic</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Your Product Name">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Your Product Name" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/81UViYvCIKL._SY879_.jpg" class="product-img" alt="Bracelet">
+      <div class="product-info">
+        <h2>Max T-Shirt</h2>
+        <p>Max Women's Cotton Regular Fit T-Shirt</p>
+        <p class="price">₹499</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+      <button class="btn-cart" onclick="addToCart('Max T-Shirt', 499)">Add to Cart</button>
+      <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+    </div>
+
+
+
+
+        <!-- Hidden extra content shown on toggle -->
+<div class="product-extra" style="display: none; margin-top: 10px;">
+  <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+    <li><strong>Material composition:</strong> 100% Cotton</li>
+    <li><strong>Pattern:</strong> Solid</li>
+    <li><strong>Fit type:</strong> Regular Fit</li>
+    <li><strong>Sleeve type:</strong> Short Sleeve</li>
+    <li><strong>Collar style:</strong> Collarless</li>
+    <li><strong>Length:</strong> Standard Length</li>
+    <li><strong>Country of Origin:</strong> India</li>
+  </ul>
+
+  <!-- Rating Section -->
+  <div style="margin-top: 15px;">
+    <div class="rating-display" data-name="Your Product Name">
+      ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+    </div>
+
+    <div class="rate-product" style="margin-top: 8px;">
+      <label for="rating-select">Rate this product: </label>
+      <select onchange="submitRating(this)" data-name="Your Product Name" id="rating-select">
+        <option value="">--Select--</option>
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐⭐</option>
+        <option value="3">3 ⭐⭐⭐</option>
+        <option value="4">4 ⭐⭐⭐⭐</option>
+        <option value="5">5 ⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+
+
+    <div class="product-box">
+  <img src="https://m.media-amazon.com/images/I/91yatTPmwvL._SY879_.jpg" class="product-img" alt="Saree">
+  <div class="product-info">
+    <h2>Saree</h2>
+    <p>Mehrang Women's Banarasi Silk Kanjivaram Saree For Wedding With Pure Zari Work</p>
+    <p class="price">₹2000</p>
+    <p class="delivery">Delivery by Tue, 18 June</p>
+
+    <div style="display: flex; gap: 20px; margin-top: 10px;">
+      <button class="btn-cart" onclick="addToCart('Saree', 2000)">Add to Cart</button>
+      <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+    </div>
+
+    <!-- Toggled Content -->
+    <div class="product-extra" style="display: none; margin-top: 10px;">
+      <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+        <li><strong>Material composition:</strong> Banarasi silk</li>
+        <li><strong>Weave type:</strong> Jacquard</li>
+        <li><strong>Occasion type:</strong> Festival</li>
+        <li><strong>Included components:</strong> Unstitched Blouse Piece</li>
+        <li><strong>Care instructions:</strong> Dry Clean Only</li>
+        <li><strong>Country of Origin:</strong> India</li>
+      </ul>
+
+      <div style="margin-top: 15px;">
+        <div class="rating-display" data-name="Saree">
+          ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+        </div>
+
+        <div class="rate-product" style="margin-top: 8px;">
+          <label for="rating-select">Rate this product: </label>
+          <select onchange="submitRating(this)" data-name="Saree" id="rating-select">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="product-box">
+  <img src="https://m.media-amazon.com/images/I/91ziaBYaBYL._SX679_.jpg" class="product-img" alt="Earrings">
+  <div class="product-info">
+    <h2>Skirt</h2>
+    <p>Studio Shringaar Women's Readymade Polyester Taffeta Floor Length Skirt Lahenga Ghaghra</p>
+    <p class="price">₹789</p>
+    <p class="delivery">Delivery by Fri, 21 June</p>
+
+    <div style="display: flex; gap: 20px; margin-top: 10px;">
+      <button class="btn-cart" onclick="addToCart('Skirt', 789)">Add to Cart</button>
+      <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+    </div>
+
+    <!-- ✅ Everything that toggles should be inside this wrapper -->
+    <div class="product-extra" style="display: none; margin-top: 10px;">
+      <ul style="list-style-type: none; padding: 0; font-size: 14px; line-height: 1.8;">
+        <li><strong>Material type:</strong> Polyester</li>
+        <li><strong>Rise style:</strong> Mid Rise</li>
+        <li><strong>Closure type:</strong> Hook & Zip</li>
+        <li><strong>Style:</strong> Fit and flare</li>
+        <li><strong>Occasion type:</strong> Ceremony</li>
+        <li><strong>Length:</strong> Maxi</li>
+        <li><strong>Country of Origin:</strong> India</li>
+      </ul>
+
+      <!-- ✅ Rating section included inside .product-extra -->
+      <div style="margin-top: 15px;">
+        <div class="rating-display" data-name="Skirt">
+          ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings
+        </div>
+
+        <div class="rate-product" style="margin-top: 8px;">
+          <label for="rating-select">Rate this product: </label>
+          <select onchange="submitRating(this)" data-name="Skirt" id="rating-select">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div> <!-- end of product-extra -->
+  </div> <!-- end of product-info -->
+</div> <!-- end of product-box -->
+</div>
+
+  
+<h2>Kid's Wear</h2>
+<div class="product-section">
+
+  <!-- 1. Girl's White Dress -->
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61EdrK2YjVL._SY879_.jpg" class="product-img" alt="Girl's White Dress">
+    <div class="product-info">
+      <h2>Girl's White Dress</h2>
+      <p>Niren Enterprise Girl's Fit And Flare Knee Length Eyelet Cotton Collar Neck Dress</p>
+      <p class="price">₹750</p>
+      <p class="delivery">Delivery by Wed, 19 June</p>
+
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+        <button class="btn-cart" onclick="addToCart('Girl\'s White Dress', 750)">Add to Cart</button>
+        <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+      </div>
+
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+        <div class="product-details">
+        
+          <ul>
+            <li><strong>Material type:</strong> Cotton</li>
+            <li><strong>Length:</strong> Maxi</li>
+            <li><strong>Occasion type:</strong> Casual</li>
+            <li><strong>Sleeve type:</strong> Half Sleeve</li>
+            <li><strong>Pattern:</strong> Solid</li>
+            <li><strong>Style:</strong> Fit And Flare</li>
+            <li><strong>Country of Origin:</strong> India</li>
+          </ul>
+        </div>
+        <div class="rating-display" data-name="Girl's White Dress">⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">12</span> ratings</div>
+        <div class="rate-product" style="margin-top: 8px;">
+          <label>Rate this product:</label>
+          <select onchange="submitRating(this)" data-name="Girl's White Dress">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Yellow Shirt -->
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61K8L5vQfUL._SX679_.jpg" class="product-img" alt="Yellow Shirt">
+    <div class="product-info">
+      <h2>Yellow Shirt</h2>
+      <p>Rocket Science Boys Casual Wear Double Pocket Shirt | Regular Fit</p>
+      <p class="price">₹500</p>
+      <p class="delivery">Delivery by Tue, 18 June</p>
+
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+        <button class="btn-cart" onclick="addToCart('Yellow Shirt', 500)">Add to Cart</button>
+        <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+      </div>
+
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+        <div class="product-details">
+          
+          <ul>
+            <li><strong>Material composition:</strong> 100% Cotton</li>
+            <li><strong>Pattern:</strong> Solid</li>
+            <li><strong>Fit type:</strong> Regular Fit</li>
+            <li><strong>Sleeve type:</strong> Long Sleeve</li>
+            <li><strong>Collar style:</strong> Spread Collar</li>
+            <li><strong>Length:</strong> Standard Length</li>
+            <li><strong>Country of Origin:</strong> India</li>
+          </ul>
+        </div>
+        <div class="rating-display" data-name="Yellow Shirt">⭐ <span class="avg-rating">4.0</span>/5 from <span class="rating-count">10</span> ratings</div>
+        <div class="rate-product" style="margin-top: 8px;">
+          <label>Rate this product:</label>
+          <select onchange="submitRating(this)" data-name="Yellow Shirt">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Jeans -->
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61ZmktSt8OL._SY879_.jpg" class="product-img" alt="Jeans">
+    <div class="product-info">
+      <h2>Jeans</h2>
+      <p>Allen Solly Girl's Regular Fit Mid Rise Jeans</p>
+      <p class="price">₹799</p>
+      <p class="delivery">Delivery by Fri, 21 June</p>
+
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+        <button class="btn-cart" onclick="addToCart('Jeans', 799)">Add to Cart</button>
+        <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+      </div>
+
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+        <div class="product-details">
+          
+          <ul>
+            <li><strong>Material type:</strong> Cotton Blend</li>
+            <li><strong>Style:</strong> Boyfriend</li>
+            <li><strong>Closure type:</strong> Button</li>
+            <li><strong>Care instructions:</strong> Machine Wash</li>
+            <li><strong>Fit type:</strong> Regular</li>
+            <li><strong>Rise style:</strong> Mid Rise</li>
+            <li><strong>Country of Origin:</strong> India</li>
+          </ul>
+        </div>
+        <div class="rating-display" data-name="Jeans">⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">14</span> ratings</div>
+        <div class="rate-product" style="margin-top: 8px;">
+          <label>Rate this product:</label>
+          <select onchange="submitRating(this)" data-name="Jeans">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Beige T-Shirt -->
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/41Y+gxZ3AML._SX679_.jpg" class="product-img" alt="Beige T-Shirt">
+    <div class="product-info">
+      <h2>Beige T-Shirt</h2>
+      <p>Nusyl Boys Solid Cotton T-Shirt | Round Neck | Half Sleeve</p>
+      <p class="price">₹399</p>
+      <p class="delivery">Delivery by Mon, 17 June</p>
+
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+        <button class="btn-cart" onclick="addToCart('Beige T-Shirt', 399)">Add to Cart</button>
+        <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+      </div>
+
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+        <div class="product-details">
+         
+          <ul>
+            <li><strong>Material composition:</strong> 80% Cotton, 20% Polyester</li>
+            <li><strong>Pattern:</strong> Solid</li>
+            <li><strong>Fit type:</strong> Regular Fit</li>
+            <li><strong>Sleeve type:</strong> Short Sleeve</li>
+            <li><strong>Collar style:</strong> Round Collar</li>
+            <li><strong>Length:</strong> Standard Length</li>
+            <li><strong>Country of Origin:</strong> India</li>
+          </ul>
+        </div>
+        <div class="rating-display" data-name="Beige T-Shirt">⭐ <span class="avg-rating">4.1</span>/5 from <span class="rating-count">9</span> ratings</div>
+        <div class="rate-product" style="margin-top: 8px;">
+          <label>Rate this product:</label>
+          <select onchange="submitRating(this)" data-name="Beige T-Shirt">
+            <option value="">--Select--</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<a class="back-link" href="homepage.html">← Back to Home</a>
+<!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Script Section -->
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartCount() {
+      const countEl = document.getElementById('cart-count');
+      if (countEl) countEl.innerText = cart.length;
+    }
+
+    function addToCart(name, price) {
+  const user = JSON.parse(localStorage.getItem("user")); // Check login
+
+  if (!user) {
+    alert("Please sign in to add items to your cart.");
+    window.location.href = "login.html"; // Redirect to login page
+    return;
+  }
+
+  cart.push({ name, price });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  showToast(`${name} has been added to your cart.`);
+}
+
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.className = 'toast show';
+      setTimeout(() => {
+        toast.className = 'toast';
+      }, 3000);
+    }
+
+    updateCartCount();
+  </script>
+<script>
+  function toggleDetails(button) {
+    const productBox = button.closest(".product-box");
+    const extra = productBox.querySelector(".product-extra");
+
+    if (extra.style.display === "none" || extra.style.display === "") {
+      extra.style.display = "block";
+      button.textContent = "Hide Details";
+    } else {
+      extra.style.display = "none";
+      button.textContent = "View Details";
+    }
+  }
+
+  
+
+  function submitRating(select) {
+    const rating = parseInt(select.value);
+    const name = select.dataset.name;
+    if (!rating || !name) return;
+
+    alert(`You rated "${name}" ${rating} stars.`);
+    // Here you'd update average/count via backend or localStorage
+  }
+</script>
+
+<script>
+  function submitRating(select) {
+    const productName = select.getAttribute('data-name');
+    const rating = parseInt(select.value);
+    if (!rating || rating < 1 || rating > 5) return;
+
+    // Load current ratings
+    const storedRatings = JSON.parse(localStorage.getItem('ratings')) || {};
+    if (!storedRatings[productName]) {
+      storedRatings[productName] = [];
+    }
+
+    storedRatings[productName].push(rating);
+    localStorage.setItem('ratings', JSON.stringify(storedRatings));
+
+    updateRatingDisplay(productName);
+    alert("Thank you for your feedback!");
+  }
+
+  function updateRatingDisplay(productName) {
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    const productRatings = ratings[productName] || [];
+
+    const avg = productRatings.length
+      ? (productRatings.reduce((a, b) => a + b) / productRatings.length).toFixed(1)
+      : "0";
+
+    document.querySelectorAll(`.rating-display[data-name="${productName}"]`).forEach(display => {
+      display.querySelector('.avg-rating').innerText = avg;
+      display.querySelector('.rating-count').innerText = productRatings.length;
+    });
+  }
+
+  // Call on page load for each product (e.g., Jeans)
+  document.addEventListener("DOMContentLoaded", () => {
+    updateRatingDisplay("Jeans");
+  });
+</script>
+
+
+
+</body>
+</html>

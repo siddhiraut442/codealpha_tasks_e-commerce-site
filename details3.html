@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Furniture</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: start;
+      padding: 20px 0 10px;
+      color: #333;
+    }
+
+    .product-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start; 
+  padding: 20px;
+}
+
+
+    .product-box {
+      background-color: white;
+      width: 23%;
+      margin: 10px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    /* .product-box:hover {
+      transform: scale(1.03);
+    } */
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f4f4f4;
+    }
+
+    .product-info {
+      padding: 15px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .product-info h2 {
+      font-size: 16px;
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    .delivery {
+      color: green;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin: 40px 0 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      color: #0052a3;
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-box {
+        width: 90%;
+      }
+    }
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 1000;
+      bottom: 30px;
+      right: 30px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view-details-btn:hover {
+  background-color: #116313;
+}
+.btn-cart {
+  flex: 1;
+  background-color: #ffa41c; /* orange */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+  background-color: #f08804;
+}
+
+.btn-details {
+  flex: 1;
+  background-color: #22a63a; 
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #095f30;
+}
+
+  .product-extra {
+    transition: all 0.3s ease;
+  }
+
+  .product-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .product-info ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .toast {
+  /* ... existing styles ... */
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.toast.warning {
+  background-color: #ff9800 !important;
+}
+
+.toast.success {
+  background-color: #4CAF50 !important;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <h2>Living Room Furniture</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61jsZFhkqIL._SX679_.jpg" class="product-img" alt="wooden table">
+      <div class="product-info">
+        <h2>Wooden Table</h2>
+        <p>Kamdhenu art and craft Wooden Center Coffee Table with Storage | Solid Sheesham Wood Centre Table for Living Room, Drawing Room & Office</p>
+        <p class="price">₹5000</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Wooden Table', 5000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+        <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> AASALIYA</li>
+      <li><strong>Product Dimensions:</strong> 46D x 86W x 46H Centimeters</li>
+      <li><strong>Maximum Weight Recommendation:</strong> 100 Pounds</li>
+      <li><strong>Frame Material:</strong> Rosewood</li>
+      <li><strong>Colour:</strong> Honey Finish</li>
+      <li><strong>Product Care Instructions:</strong> Clean With Soft Cloth</li>
+      <li><strong>Shape:</strong> Rectangular</li>
+      <li><strong>Table design:</strong> Coffee Table</li>
+      <li><strong>Style:</strong> Traditional</li>
+      <li><strong>Finish Type:</strong> Polished</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="AASALIYA Coffee Table">
+    ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">15</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="AASALIYA Coffee Table">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+        
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61t3HN0vAEL._SL1500_.jpg" class="product-img" alt="tv unit.jpg">
+      <div class="product-info">
+        <h2>TV Unit</h2>
+        <p>WoodMarwar Solid Sheesham Wood Entertainment Tv Unit for Living Room | Free Standing Media Console Tv Cabinet Sideboard | Tv Table Side Board with 2 Drawer, 2 Door Cabinet & 3 Shelf Storage | Natural</p>
+        <p class="price">₹18000</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Tv Unit', 18000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+       <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> Tannuraj</li>
+      <li><strong>Colour:</strong> Natural Brown</li>
+      <li><strong>Material:</strong> Sheesham Wood</li>
+      <li><strong>Product Dimensions:</strong> 45D x 60W x 145H Centimeters</li>
+      <li><strong>Mounting Type:</strong> Floor Mount</li>
+      <li><strong>Room Type:</strong> Dining Room</li>
+      <li><strong>Included Components:</strong> CABINET</li>
+      <li><strong>Finish Type:</strong> Polished</li>
+      <li><strong>Size:</strong> 145 x 45 x 60 cm</li>
+      <li><strong>Number of Pieces:</strong> 1</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Tannuraj Cabinet">
+    ⭐ <span class="avg-rating"></span>/5 from <span class="rating-count"></span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Tannuraj Cabinet">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51T3IZmnbIL._SX300_SY300_QL70_FMwebp_.jpg" class="product-img" alt="sofa">
+      <div class="product-info">
+        <h2>Sofa</h2>
+        <p>Elavra Sheesham Wood 3 Seater Sofa for Living Room Bedroom Hall Home Office Wooden 3 Seater Sofa Furniture (Walnut Finish)</p>
+        <p class="price">₹25000</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('3 Seater Sofa', 25000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+       <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> Wopno Furniture</li>
+      <li><strong>Assembly Required:</strong> Yes</li>
+      <li><strong>Seat Depth:</strong> 71.1 Centimeters</li>
+      <li><strong>Seat Height:</strong> 15 Inches</li>
+      <li><strong>Weight Limit:</strong> 300 Kilograms</li>
+      <li><strong>Product Dimensions:</strong> 71.1D x 180.3W x 81.3H Centimeters</li>
+      <li><strong>Item Weight:</strong> 40 Kilograms</li>
+      <li><strong>Type:</strong> Standard</li>
+      <li><strong>Colour:</strong> Walnut</li>
+      <li><strong>Special Feature:</strong> Space Saving</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Wopno Furniture Standard Seat">
+    ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">23</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Wopno Furniture Standard Seat">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51lJMDYzAPL.jpg" class="product-img" alt="side table">
+      <div class="product-info">
+        <h2>Side Table</h2>
+        <p>Wooden Side Table for Bedroom & Living Room – Bedside Stand | Small Coffee & End Table | Sofa Side Shelf | Corner Stand | Modern Bedside Organizer | Living Room Furniture | Home Decor</p>
+        <p class="price">₹1499</p>
+        <p class="delivery">Delivery by Mon, 17 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Side Table', 1499)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+        <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> Space Galaxy</li>
+      <li><strong>Product Dimensions:</strong> 35.6D x 43.2W x 55.9H Centimeters</li>
+      <li><strong>Frame Material:</strong> Sheesham Wood</li>
+      <li><strong>Colour:</strong> Brown-B</li>
+      <li><strong>Product Care Instructions:</strong> Dry Clean Only</li>
+      <li><strong>Shape:</strong> Rectangular</li>
+      <li><strong>Table design:</strong> Nightstand</li>
+      <li><strong>Style:</strong> Contemporary</li>
+      <li><strong>Finish Type:</strong> Polished</li>
+      <li><strong>Base Type:</strong> Leg</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Space Galaxy Nightstand">
+    ⭐ <span class="avg-rating">4.7</span>/5 from <span class="rating-count">34</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Space Galaxy Nightstand">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Kitchen Furniture</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51VnL+JRNwL.jpg" class="product-img" alt="kitchen trolley">
+      <div class="product-info">
+        <h2>Kitchen Trolley</h2>
+        <p>FEELING MALL Serving Trolley with Wheel, Bathroom Organizer, Solid Wood Kitchen Mobile 3 Tier Storage Rack, Living Room Cart, Wine Cart,Storage Shelf Brown Finish</p>
+        <p class="price">₹2999</p>
+        <p class="delivery">Delivery by Thu, 20 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Kitchen Trolley', 2999)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+        <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Shelf Type:</strong> Tiered Shelf</li>
+      <li><strong>Material:</strong> Rosewood</li>
+      <li><strong>Frame Material:</strong> Wood</li>
+      <li><strong>Brand:</strong> Vm decor</li>
+      <li><strong>Colour:</strong> Black</li>
+      <li><strong>Furniture Finish:</strong> Black, Black Finish, Maple Finish</li>
+      <li><strong>Style:</strong> Modern</li>
+      <li><strong>Size:</strong> 23×14×29 inches</li>
+      <li><strong>Product Care Instructions:</strong> Wipe with Dry Cloth</li>
+      <li><strong>Assembly Required:</strong> Yes</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Vm Decor Tiered Shelf">
+    ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">28</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Vm Decor Tiered Shelf">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/91XnABj1QrL._SX679_.jpg" class="product-img" alt="dining table">
+      <div class="product-info">
+        <h2>Dining Table</h2>
+        <p>Jangid Handicraft Solid Sheesham Wood Traditional Dining Table 4 Seater | Wooden Four Seater Dinning Table with 4 Chairs for Home | Chairs with Cushion | Dining Room Sets for Restaurants | Dark Brown</p>
+        <p class="price">₹22000</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dining Table', 22000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+       <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Colour:</strong> 4S-A-Dark Brown-01</li>
+      <li><strong>Brand:</strong> Jangid Handicraft</li>
+      <li><strong>Size:</strong> 4 seater</li>
+      <li><strong>Item Dimensions:</strong> 86.4 x 86.4 x 76.2 Centimeters</li>
+      <li><strong>Product Care Instructions:</strong> Wipe with Dry Cloth</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Jangid Handicraft 4-Seater">
+    ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">42</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Jangid Handicraft 4-Seater">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/715r+UueQPL._SX679_.jpg" class="product-img" alt="wall cabinet">
+      <div class="product-info">
+        <h2>Wall Cabinets</h2>
+        <p>TEX-RO Wall Mounted Storage Cabinet for Kitchen & Bathroom/Multipurpose Kitchen Cabinets Storage Racks/Space Saving Storage Cabinet/Cabinet Organizer(White, Plastic)</p>
+        <p class="price">₹2800</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Wall Cabinets', 2800)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+       <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> TEX-RO</li>
+      <li><strong>Colour:</strong> White</li>
+      <li><strong>Material:</strong> Plastic</li>
+      <li><strong>Recommended Uses:</strong> Home Bar</li>
+      <li><strong>Product Dimensions:</strong> 13D x 32W x 40.5H Centimeters</li>
+      <li><strong>Special Feature:</strong> Stackable</li>
+      <li><strong>Room Type:</strong> Kitchen, Bathroom</li>
+      <li><strong>Door Style:</strong> Open Frame</li>
+      <li><strong>Included Components:</strong> Storage Cabinet</li>
+      <li><strong>Size:</strong> Pack of 1</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="TEX-RO Storage Cabinet">
+    ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">37</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="TEX-RO Storage Cabinet">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71CmMCLrofL._SX679_.jpg" class="product-img" alt="rolling rack">
+      <div class="product-info">
+        <h2>Rolling Rack</h2>
+        <p>Slim Rolling Storage Rack – 3-Tier Plastic Slide-Out Organizer for Kitchen, Bathroom, Laundry Room – Space-Saving Multipurpose Shelf for Pantry & Utility Storage (White)</p>
+        <p class="price">₹500</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Rolling Rack', 500)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+       <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Product Dimensions:</strong> 49D x 12W x 110.5H Centimeters</li>
+      <li><strong>Shelf Type:</strong> Corner Shelf</li>
+      <li><strong>Material:</strong> Plastic</li>
+      <li><strong>Frame Material:</strong> Plastic</li>
+      <li><strong>Brand:</strong> amazon basics</li>
+      <li><strong>Colour:</strong> White</li>
+      <li><strong>Furniture Finish:</strong> White</li>
+      <li><strong>Style:</strong> 3 Layer</li>
+      <li><strong>Size:</strong> Standard</li>
+      <li><strong>Product Care Instructions:</strong> Wipe with Dry Cloth</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="Corner Shelf">
+    ⭐ <span class="avg-rating"></span>/5 from <span class="rating-count"></span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="Corner Shelf">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+<h2>Bedroom & Balcony Furniture</h2>
+<div class="product-section">
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71JO-yJmZ6L._SL1500_.jpg" class="product-img" alt="bed">
+    <div class="product-info">
+      <h2>Bed</h2>
+      <p>Ganpati Arts Sheesham Wood Emperor Upholstered Queen Size Bed with Box Storage and Tufted Headboard| Durable Wooden Double Bed Cot Palang for Bedroom, Hotels, and Home (Off-White-1 Year Warranty)</p>
+      <p class="price">₹30000</p>
+      <p class="delivery">Delivery by Wed, 19 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Bed', 30000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+     <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Size:</strong> King</li>
+      <li><strong>Special Features:</strong> 
+        <ul class="feature-list">
+          <li>Easy To Maintain</li>
+          <li>Termite Free</li>
+          <li>Durable</li>
+          <li>Long Lifetime</li>
+          <li>Good Quality</li>
+        </ul>
+      </li>
+      <li><strong>Colour:</strong> Honey_B</li>
+      <li><strong>Upholstery Fabric Type:</strong> Polycotton</li>
+      <li><strong>Product Dimensions:</strong> 2.05L x 1.89W x 0.88H Meters</li>
+      <li><strong>Brand:</strong> EBANSAL</li>
+      <li><strong>Included Components:</strong> All The Tools & Accessories Required For Assembly, Wooden King Size Bed</li>
+      <li><strong>Finish Type:</strong> Glossy</li>
+      <li><strong>Weight Limit:</strong> 120 Kilograms</li>
+      <li><strong>Item Weight:</strong> 100 Kilograms</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="EBANSAL King Size Bed">
+    ⭐ <span class="avg-rating">4.8</span>/5 from <span class="rating-count">56</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="EBANSAL King Size Bed">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/710OXB5xSyL._SX679_.jpg" class="product-img" alt="cupboard">
+    <div class="product-info">
+      <h2>Cupboard</h2>
+      <p>CARVING CUSTOMS Solid Sheesham Wooden 2 Door Wardrobe for Clothes with 2 Drawer 4 Shelf Storage & Hanging Space - Sheesham Wood Almirah for Bedroom - Solid Wood Large Cupboard (Natural Finish)</p>
+      <p class="price">₹25000</p>
+      <p class="delivery">Delivery by Tue, 18 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Cupboard', 25000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+    <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> CARVING CUSTOMS</li>
+      <li><strong>Colour:</strong> Natural</li>
+      <li><strong>Material:</strong> Sheesham Wood</li>
+      <li><strong>Recommended Uses:</strong> Storage</li>
+      <li><strong>Product Dimensions:</strong> 55.9D x 91.4W x 182.9H Centimeters</li>
+      <li><strong>Special Feature:</strong> Lightweight</li>
+      <li><strong>Mounting Type:</strong> Floor Mount</li>
+      <li><strong>Room Type:</strong> Living Room</li>
+      <li><strong>Included Components:</strong> 1 Wardrobe</li>
+      <li><strong>Finish Type:</strong> Polished</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="CARVING CUSTOMS Sheesham Wood Wardrobe">
+    ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">38</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="CARVING CUSTOMS Sheesham Wood Wardrobe">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71zWciepfCL._SL1280_.jpg" class="product-img" alt="chair set">
+    <div class="product-info">
+      <h2>Chair Set</h2>
+    <p>PRAJARI ENTERPRISE Patio Chair Sets Garden Wicker Furniture Set for Outdoor Patio and Balcony || Powder Coated Frame| UV Protected Wicker [2 Chair, 1 Table]</p>
+      <p class="price">₹15000</p>
+      <p class="delivery">Delivery by Fri, 21 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Chair Set', 15000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Colour:</strong> A8</li>
+      <li><strong>Brand:</strong> PRAJARI ENTERPRISE</li>
+      <li><strong>Size:</strong> Medium</li>
+      <li><strong>Item Depth:</strong> 24 Centimeters</li>
+      <li><strong>Item Dimensions:</strong> 61 x 61 x 61 Centimeters</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="PRAJARI ENTERPRISE Medium Product">
+    ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">27</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="PRAJARI ENTERPRISE Medium Product">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61gg9W255+L._SX679_.jpg" class="product-img" alt="swing">
+    <div class="product-info">
+      <h2> Wooden Swing</h2>
+      <p>AD Planet Solid Wood 2 Seater Rope Swing Chair | Wooden Hammock Swing Sofa with Rope & Complete Accessories for Living Room, Indoor, Outdoor, Balcony & Garden | House Big Swings Jhula | Dark Black</p>
+      <p class="price">₹24000</p>
+      <p class="delivery">Delivery by Mon, 17 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Wooden Swing', 24000)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+      <div class="product-extra" style="display: none; margin-top: 10px;">
+  <div class="product-details">
+    <ul>
+      <li><strong>Brand:</strong> AD Planet</li>
+      <li><strong>Colour:</strong> B-Honey Finish</li>
+      <li><strong>Material:</strong> Wood</li>
+      <li><strong>Product Dimensions:</strong> 137.2D x 66W x 20.8H Centimeters</li>
+      <li><strong>Frame Material:</strong> Wood</li>
+    </ul>
+  </div>
+
+  <div class="rating-display" data-name="AD Planet Wooden Product">
+    ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">31</span> ratings
+  </div>
+
+  <div class="rate-product" style="margin-top: 8px;">
+    <label>Rate this product:</label>
+    <select onchange="submitRating(this)" data-name="AD Planet Wooden Product">
+      <option value="">--Select--</option>
+      <option value="1">1 ⭐</option>
+      <option value="2">2 ⭐⭐</option>
+      <option value="3">3 ⭐⭐⭐</option>
+      <option value="4">4 ⭐⭐⭐⭐</option>
+      <option value="5">5 ⭐⭐⭐⭐⭐</option>
+    </select>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<a class="back-link" href="homepage.html">← Back to Home</a>
+
+   <!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+ 
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function isUserLoggedIn() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null;
+  }
+
+  function showToast(message, type = "warning") {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => {
+      toast.className = "toast";
+    }, 3000);
+  }
+
+  
+</script>
+<script>
+  function isUserLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+  }
+
+  function showToast(message, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 3000);
+  }
+
+  function addToCart(productName, price) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn !== "true") {
+    showToast("Please login first to add items to cart", "warning");
+    
+    // Redirect to signin after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+
+    return false;
+  }
+
+  // Proceed to add to cart if logged in
+  showToast(`${productName} added to cart`, "success");
+  return true;
+}
+
+
+</script>
+<script>
+  function toggleDetails(button) {
+  const productBox = button.closest(".product-box");
+  const extra = productBox.querySelector(".product-extra");
+
+  if (extra.style.display === "none" || extra.style.display === "") {
+    // Close all other open details first
+    document.querySelectorAll(".product-extra").forEach(item => {
+      if (item !== extra) {
+        item.style.display = "none";
+        const otherBtn = item.closest(".product-box").querySelector(".btn-details");
+        if (otherBtn) otherBtn.textContent = "View Details";
+      }
+    });
+
+    extra.style.display = "block";
+    button.textContent = "Hide Details";
+  } else {
+    extra.style.display = "none";
+    button.textContent = "View Details";
+  }
+}
+
+  
+
+  function submitRating(select) {
+    const rating = parseInt(select.value);
+    const name = select.dataset.name;
+    if (!rating || !name) return;
+
+    alert(`You rated "${name}" ${rating} stars.`);
+    // Here you'd update average/count via backend or localStorage
+  }
+</script>
+
+<script>
+  function submitRating(select) {
+    const productName = select.getAttribute('data-name');
+    const rating = parseInt(select.value);
+    if (!rating || rating < 1 || rating > 5) return;
+
+    // Load current ratings
+    const storedRatings = JSON.parse(localStorage.getItem('ratings')) || {};
+    if (!storedRatings[productName]) {
+      storedRatings[productName] = [];
+    }
+
+    storedRatings[productName].push(rating);
+    localStorage.setItem('ratings', JSON.stringify(storedRatings));
+
+    updateRatingDisplay(productName);
+    alert("Thank you for your feedback!");
+  }
+
+  function updateRatingDisplay(productName) {
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    const productRatings = ratings[productName] || [];
+
+    const avg = productRatings.length
+      ? (productRatings.reduce((a, b) => a + b) / productRatings.length).toFixed(1)
+      : "0";
+
+    document.querySelectorAll(`.rating-display[data-name="${productName}"]`).forEach(display => {
+      display.querySelector('.avg-rating').innerText = avg;
+      display.querySelector('.rating-count').innerText = productRatings.length;
+    });
+  }
+
+  // Call on page load for each product (e.g., Jeans)
+  document.addEventListener("DOMContentLoaded", () => {
+    updateRatingDisplay("Jeans");
+  });
+</script>
+
+
+</body>
+</html>

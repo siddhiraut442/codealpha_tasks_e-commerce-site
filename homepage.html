@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase - Premium Shopping</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f8f9fa;
+      min-height: 100vh;
+      position: relative;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: #ffffff;
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      height: 55px;
+      width: 55px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .logo-name {
+      font-size: 26px;
+      font-weight: 600;
+      color: #2c3e50;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      width: 350px;
+      max-width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .nav-search:focus-within {
+      border-color:#2c3e50; 
+      box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.1);
+    }
+
+    .nav-search select {
+      border: none;
+      padding: 12px 15px;
+      font-size: 15px;
+      flex: 1;
+      background: transparent;
+      outline: none;
+      color: #2c3e50;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .search-icon {
+      background-color: #2c3e50;
+      padding: 12px 18px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 15px;
+      border-radius: 0 8px 8px 0;
+      transition: background-color 0.3s;
+    }
+
+    .search-icon:hover {
+      background-color: #1a252f;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 600;
+      font-size: 16px;
+      position: relative;
+      transition: color 0.3s;
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    .nav-link:hover {
+      color: #3498db;
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+   /* .cart-icon {
+  position: relative;
+  height: 65px;
+  width: 65px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; 
+  transition: all 0.3s ease;
+} */
+
+.cart-icon:hover {
+  transform: scale(1.1); /* Add slight hover effect */
+}
+
+.cart-icon {
+      position: relative;
+      font-size: 24px;
+    }
+    
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: #667eea;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+/* Update the nav-link to accommodate larger cart */
+.nav-link.cart-icon {
+  padding: 0; /* Remove padding since we're controlling size directly */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+    .main-content {
+      padding: 30px 5%;
+      padding-bottom: 80px;
+    }
+
+    .shop-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+
+    .box {
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid #e0e0e0;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .box-content {
+      padding: 20px;
+    }
+
+    .box-img {
+      width: 100%;
+      height: 200px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .box h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+
+    .see-more {
+      display: inline-block;
+      margin-top: 15px;
+      color: #3498db;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .see-more:hover {
+      color: #2980b9;
+      text-decoration: underline;
+    }
+    
+    .highlight {
+      animation: highlight 1.5s ease-out;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+    }
+    
+    @keyframes highlight {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 50px;
+      font-size: 18px;
+      color: #7f8c8d;
+      display: none;
+      grid-column: 1 / -1;
+    }
+    
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #f1f1f1;
+    }
+    .animate-bounce {
+  animation: bounce 0.5s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+  </style>
+</head>
+<body>
+
+ <!-- Navbar -->
+<div class="navbar">
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/128/3081/3081559.png" alt="shopping bags">
+    <div class="logo-name">ShopEase</div>
+  </div>
+
+  <div class="nav-search">
+    <select id="category-select">
+      <option value="">All Categories</option>
+      <option value="Clothes">Clothes</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Pet Care">Pet Care</option>
+      <option value="Health & Personal Care">Health & Personal Care</option>
+      <option value="Beauty Picks">Beauty Picks</option>
+      <option value="Furniture">Furniture</option>
+      <option value="Toys">Toys</option>
+      <option value="Fashion Trends">Fashion Trends</option>
+    </select>
+    <button class="search-icon" id="search-button">
+      <i class="fa-solid fa-filter"></i>
+    </button>
+  </div>
+
+  <div class="nav-actions">
+    <a href="index.html" class="nav-link">LOGIN</a>
+    <a href="register.html" class="nav-link">REGISTER</a>
+    
+  </div>
+</div>
+
+<div class="main-content">
+  <h1 class="section-title">Our Products</h1>
+  
+ 
+
+  <!-- Shop Section -->
+  <div class="shop-section">
+    <div class="box" data-category="Clothes">
+      <div class="box-content">
+        <h2>Clothing</h2>
+        <div class="box-img" style="background-image: url('https://img.freepik.com/free-photo/still-life-hanging-bag_23-2151009066.jpg?semt=ais_hybrid&w=740');"></div>
+        <a href="details1.html" class="see-more">Explore Collection →</a>
+      </div>
+    </div>
+    
+    <!-- 2nd Box - Health & Personal Care -->
+    <div class="box" data-category="Health & Personal Care">
+      <div class="box-content">
+        <h2>Health & Personal Care</h2>
+        <div class="box-img" style="background-image: url('https://as1.ftcdn.net/v2/jpg/14/42/32/56/1000_F_1442325654_j9N9tym5vwXUq5DCRsyltefyIxmbC4oc.jpg');"></div>
+        <a href="details2.html" class="see-more">Shop Now →</a>
+      </div>
+    </div>
+    
+    <div class="box" data-category="Furniture">
+      <div class="box-content">
+        <h2>Modern Furniture</h2>
+        <div class="box-img" style="background-image: url('https://cdn-bacgp.nitrocdn.com/PZGPGOIaHzKXVmBAOegLfgdTtGGgvLRv/assets/images/optimized/rev-04195c7/bestofexports.com/wp-content/uploads/2021/02/Wooden-Furniture-Manufacturer-1024x683.jpg');"></div>
+        <a href="details3.html" class="see-more">Explore Styles →</a>
+      </div>
+    </div>
+    
+   
+    <div class="box" data-category="Electronics">
+      <div class="box-content">
+        <h2>Smart Devices</h2>
+        <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1201&q=8');"></div>
+        <a href="details4.html" class="see-more">View Tech  →</a>
+      </div>
+    </div>
+    
+    <div class="box" data-category="Beauty Picks">
+      <div class="box-content">
+        <h2>Beauty Picks</h2>
+        <div class="box-img" style="background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh26b1DRDa0NaOSum3zj9iwWAUfXIWyRjo_XEweXZ69Ot_G-uQyaKb-v3Lv_6z6ceHsnMhvJ1JrCH8P7pEAP4o_RM6JFXuro896PHsmxQTXJmgURUVdhYzRPFFT8CbCiJRKj9suMl9htWpK/s1600/Starry+Starry+Eyes+makeup+tutorial+%252B+makeup+products+to+use+1.jpeg');"></div>
+        <a href="details5.html" class="see-more">Discover Products→</a>
+      </div>
+    </div>
+    
+    <div class="box" data-category="Pet Care">
+      <div class="box-content">
+        <h2>Pet Luxury</h2>
+        <div class="box-img" style="background-image: url('https://pawpurrfect.co/wp-content/uploads/2023/02/1-900x600-1-900x600-1-900x600.jpg');"></div>
+        <a href="details6.html" class="see-more">View Collection →</a>
+      </div>
+    </div>
+    
+    <div class="box" data-category="Toys">
+      <div class="box-content">
+        <h2>Toys</h2>
+        <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <a href="details7.html" class="see-more">Explore Toys →</a>
+      </div>
+    </div>
+    
+    <div class="box" data-category="Fashion Trends">
+      <div class="box-content">
+        <h2>Trending Fashion</h2>
+        <div class="box-img" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');"></div>
+        <a href="details8.html" class="see-more">See Trends →</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

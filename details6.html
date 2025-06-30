@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pet Care</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: start;
+      padding: 20px 0 10px;
+      color: #333;
+    }
+
+    .product-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 20px;
+  align-items: flex-start; /* Add this line */
+}
+
+.product-box {
+  background-color: white;
+  width: 23%;
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  display: flex; /* Add these lines */
+  flex-direction: column;
+  min-height: 0; /* Important for flex children */
+}
+
+.product-info {
+  padding: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+  flex: 1; /* Makes the info section take available space */
+  min-height: 0; /* Important for flex children */
+}
+
+    /* .product-box:hover {
+      transform: scale(1.03);
+    } */
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f4f4f4;
+    }
+
+    
+    .product-info h2 {
+      font-size: 16px;
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    .delivery {
+      color: green;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin: 40px 0 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      color: #0052a3;
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-box {
+        width: 90%;
+      }
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 1000;
+      bottom: 30px;
+      right: 30px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view-details-btn:hover {
+  background-color: #116313;
+}
+.btn-cart {
+  flex: 1;
+  background-color: #ffa41c; /* orange */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+  background-color: #f08804;
+}
+
+.btn-details {
+  flex: 1;
+  background-color: #22a63a; 
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #095f30;
+}
+
+  .product-extra {
+    transition: all 0.3s ease;
+  }
+
+  .product-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .product-info ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .toast {
+  /* ... existing styles ... */
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.toast.warning {
+  background-color: #ff9800 !important;
+}
+
+.toast.success {
+  background-color: #4CAF50 !important;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <h2>Pet Hair Care</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71sCCCLUfrL._SX679_.jpg" class="product-img" alt="pet shampoo">
+      <div class="product-info">
+        <h2>Pet Shampoo</h2>
+        <p>LAFUA 5 in 1 Pet Shampoo and Conditioner | Anti-Tick,Anti-Itch, Shed Control,Dry Shampoo for Puppy,Labrador, Golden Retriever, Shih Tzu | Tick and Flea Dog Shampoo | 935ml |</p>
+        <p class="price">₹499</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+          <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Pet Shampoo', 499)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+     <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> LAFUA</li>
+          <li><strong>Scent:</strong> Chamomile, Lavender</li>
+          <li><strong>Product Benefits:</strong> Strengthens and revitalizes pet coat, leaving it shiny healthy</li>
+          <li><strong>Recommended Uses:</strong> Dog Shampoo, Tick and Flea Dog Shampoo, Anti tick shampoo</li>
+          <li><strong>Material Type Free:</strong> Paraben Free</li>
+          <li><strong>Item Form:</strong> Lotion, Gel</li>
+          <li><strong>Liquid Volume:</strong> 1000 Millilitres</li>
+          <li><strong>Special Ingredients:</strong> Rosemary oil, Coconut oil, Chamomile Extracts, Oatmeal</li>
+          <li><strong>Target Species:</strong> Dog And Cat</li>
+          <li><strong>Allergen Information:</strong> Allergen-Free</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="LAFUA Pet Shampoo">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">62</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="LAFUA Pet Shampoo">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+  
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61k0Nuh8jgL._SL1485_.jpg" class="product-img" alt="conditioner">
+      <div class="product-info">
+        <h2>Pet Conditioner</h2>
+        <p>Moe Puppy Moisturizing 4-in-1 Pet Conditioner with Oatmeal, Coconut Oil, Shea Butter, Argan Oil, 120g</p>
+        <p class="price">₹389</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+          <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Pet Conditioner', 389)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Moe Puppy</li>
+          <li><strong>Scent:</strong> Natural</li>
+          <li><strong>Product Benefits:</strong> Conditions dehydrated hair, De-Tangles knots and mats, Shiny & smooth hair, Tames frizzy fur</li>
+          <li><strong>Recommended Uses:</strong> Coat</li>
+          <li><strong>Item Form:</strong> Liquid</li>
+          <li><strong>Liquid Volume:</strong> 120 Millilitres</li>
+          <li><strong>Special Ingredients:</strong> Shea Butter, Argan Oil, Coconut Oil, Oatmeal</li>
+          <li><strong>Target Species:</strong> Dog</li>
+          <li><strong>Allergen Information:</strong> Fish Free</li>
+          <li><strong>UPC:</strong> 796554771069</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Moe Puppy Dog Conditioner">
+        ⭐ <span class="avg-rating">4.7</span>/5 from <span class="rating-count">84</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Moe Puppy Dog Conditioner">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+  
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51twXf+vSuL._SX679_.jpg" class="product-img" alt="paw trimmer">
+      <div class="product-info">
+        <h2>Paw Trimmer</h2>
+        <p>HASTHIP® Cat Dog Trimmer for Paw - Small Area Hair Trimmer with LED Light, Low Noise, USB Rechargeable, Pen Shape Design</p>
+        <p class="price">₹799</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Paw Trimmer', 799)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> HASTHIP</li>
+          <li><strong>Color:</strong> White</li>
+          <li><strong>Recommended Uses:</strong> Trimming, Nose Hair</li>
+          <li><strong>Hair Type:</strong> All</li>
+          <li><strong>Item Weight:</strong> 120 Grams</li>
+          <li><strong>Power Source:</strong> Rechargeable</li>
+          <li><strong>Material:</strong> Stainless Steel, Plastic</li>
+          <li><strong>Special Feature:</strong> Low noise operation</li>
+          <li><strong>Dimensions:</strong> 16.5 x 3 x 3 cm</li>
+          <li><strong>Blade Material:</strong> Metal</li>
+          <li><strong>Safety:</strong> Rounded tip blades</li>
+          <li><strong>Battery:</strong> Lithium-ion (90 mins runtime)</li>
+          <li><strong>Waterproof:</strong> IPX7 rated</li>
+          <li><strong>Accessories:</strong> 3 guide combs, Cleaning brush</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="HASTHIP Pet Trimmer">
+        ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">127</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="HASTHIP Pet Trimmer">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+     </div>
+      </div>
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51DVuIIBVoL._SX300_SY300_QL70_FMwebp_.jpg" class="product-img" alt="grooming kit">
+      <div class="product-info">
+        <h2>Grooming Kit</h2>
+        <p>PSK Dog Grooming Kit - Dog Nail Cutter + Dog Nail Filer+Pet Bath Brush Grooming Comb with Adjustable Ring + Pet Single Steel Comb + Pet Grooming Glove for Dog, Puppy, Cat and Kitten - 5 in 1 Dog Combo</p>
+        <p class="price">₹360</p>
+        <p class="delivery">Delivery by Mon, 17 June</p>
+          <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Grooming Kit', 360)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> PSK PET MART</li>
+          <li><strong>Color:</strong> Multicolored</li>
+          <li><strong>Shape:</strong> Round</li>
+          <li><strong>Bristle Material:</strong> Stainless Steel</li>
+          <li><strong>Handle Material:</strong> Steel</li>
+          <li><strong>Special Feature:</strong> Adjustable</li>
+          <li><strong>Product Benefits:</strong> Curl Enhancing</li>
+          <li><strong>Net Quantity:</strong> 1 Count</li>
+          <li><strong>Material:</strong> Metal</li>
+          <li><strong>Usage:</strong> Professional pet grooming</li>
+          <li><strong>Size:</strong> Standard grooming brush size</li>
+          <li><strong>Care Instructions:</strong> Wipe clean after use</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="PSK PET MART Curling Brush">
+        ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">56</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="PSK PET MART Curling Brush">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Pet Supplies</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/818-3L9i6aL._SX679_.jpg" class="product-img" alt="pet food">
+      <div class="product-info">
+        <h2>Pet Food</h2>
+      <p>Pedigree Adult Dry Dog Food, Chicken & Vegetables, 10 kg, Contains 37 Essential Nutrients, 100% Complete & Balanced Food for Adult Dogs</p>
+        <p class="price">₹2222</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Pet Food', 2222)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Pedigree</li>
+          <li><strong>Flavor:</strong> Chicken & Vegetables</li>
+          <li><strong>Quantity:</strong> 10 kg</li>
+          <li><strong>Nutrition:</strong> Contains 37 Essential Nutrients</li>
+          <li><strong>Completeness:</strong> 100% Complete & Balanced Food</li>
+          <li><strong>Life Stage:</strong> Adult Dogs</li>
+          <li><strong>Key Benefits:</strong> 
+            <ul>
+              <li>Supports healthy digestion</li>
+              <li>Promotes strong muscles</li>
+              <li>Maintains healthy skin & coat</li>
+              <li>Dental care benefits</li>
+            </ul>
+          </li>
+          <li><strong>Protein Source:</strong> Chicken</li>
+          <li><strong>Recommended For:</strong> Dogs 1+ years old</li>
+          <li><strong>Feeding Guide:</strong> Included on packaging</li>
+          <li><strong>Storage:</strong> Store in cool, dry place</li>
+          <li><strong>Certification:</strong> Meets FSSAI standards</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Pedigree Adult Dry Dog Food">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">2,347</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Pedigree Adult Dry Dog Food">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/81BP5935yZL._SY879_.jpg" class="product-img" alt="cat food">
+      <div class="product-info">
+        <h2>Cat Food</h2>
+        <p>Kitty Yums Persian Adult Dry Cat Food, Ocean Fish, 7kg Pack</p>
+        <p class="price">₹1890</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Cat Food',1890)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Kitty Yums</li>
+          <li><strong>Flavor:</strong> Fish</li>
+          <li><strong>Age Range:</strong> Adult Cats</li>
+          <li><strong>Form:</strong> Bars</li>
+          <li><strong>Special Benefits:</strong>
+            <ul>
+              <li>Supports active behavior</li>
+              <li>Boosts immunity</li>
+              <li>Hairball control</li>
+            </ul>
+          </li>
+          <li><strong>Key Ingredient:</strong> Fish</li>
+          <li><strong>Net Quantity:</strong> 3000 Grams (3kg)</li>
+          <li><strong>Package Contents:</strong> 1 Bag</li>
+          <li><strong>Texture:</strong> Crunchy exterior with soft center</li>
+          <li><strong>Nutritional Features:</strong>
+            <ul>
+              <li>High protein content</li>
+              <li>Essential vitamins & minerals</li>
+              <li>Taurine enriched</li>
+            </ul>
+          </li>
+          <li><strong>Serving Suggestion:</strong> 8-10 bars per day for average adult cat</li>
+          <li><strong>Storage:</strong> Keep in cool, dry place</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Kitty Yums Cat Food Bars">
+        ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">428</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Kitty Yums Cat Food Bars">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51b13FfnasL._SX679_.jpg" class="product-img" alt="rabbit food">
+      <div class="product-info">
+        <h2>Dried Food</h2>
+        <p>Petslife All Life Stages Rabbit Premium Dry Food, 1 kg</p>
+        <p class="price">₹525</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dried Food', 525)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Petslife</li>
+          <li><strong>Flavor:</strong> Vegetable</li>
+          <li><strong>Age Range:</strong> All Life Stages</li>
+          <li><strong>Form:</strong> Stick</li>
+          <li><strong>Key Benefits:</strong>
+            <ul>
+              <li>Immune system support</li>
+              <li>Complete daily diet</li>
+              <li>Coat color enhancing</li>
+              <li>Digestive health</li>
+              <li>Growth development</li>
+            </ul>
+          </li>
+          <li><strong>Special Ingredients:</strong> Corn, Wheat, Sunflower, Peanut</li>
+          <li><strong>Net Quantity:</strong> 1000 Grams (1kg)</li>
+          <li><strong>Package Type:</strong> Pouch</li>
+          <li><strong>Nutritional Highlights:</strong>
+            <ul>
+              <li>High vegetable protein</li>
+              <li>Essential fatty acids</li>
+              <li>Vitamin enriched</li>
+            </ul>
+          </li>
+          <li><strong>Suitable For:</strong> Dogs and cats of all ages</li>
+          <li><strong>Feeding Guide:</strong> 8-10 sticks per day for medium-sized pets</li>
+          <li><strong>Storage:</strong> Resealable pouch maintains freshness</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Petslife Vegetable Pet Sticks">
+        ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">315</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Petslife Vegetable Pet Sticks">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/61CzA4lmpAL._SX679_.jpg" class="product-img" alt="Earrings">
+      <div class="product-info">
+        <h2>Fish Food</h2>
+        <p>Amazon Basics Complete Granule Fish Food | 93 Gram | for Growth and Health | Fish in All Life Stages</p>
+        <p class="price">₹164</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Fish Food', 164)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Amazon Basics</li>
+          <li><strong>Flavor:</strong> Seafood</li>
+          <li><strong>Age Range:</strong> All Life Stages</li>
+          <li><strong>Form:</strong> Granule</li>
+          <li><strong>Primary Benefit:</strong> Appetite Stimulation</li>
+          <li><strong>Special Ingredients:</strong> Nutrient-rich proteins</li>
+          <li><strong>Net Quantity:</strong> 93 Grams</li>
+          <li><strong>Package Type:</strong> Bag</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Highly palatable seafood flavor</li>
+              <li>Easy-to-digest granules</li>
+              <li>Balanced nutrition</li>
+            </ul>
+          </li>
+          <li><strong>Suitable For:</strong> Dogs and cats</li>
+          <li><strong>Feeding Recommendation:</strong> Can be mixed with regular food or served alone</li>
+          <li><strong>Storage:</strong> Keep in cool, dry place after opening</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Amazon Basics Seafood Pet Food">
+        ⭐ <span class="avg-rating">4.0</span>/5 from <span class="rating-count">182</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Amazon Basics Seafood Pet Food">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+<h2>Pet Belts & Toys</h2>
+<div class="product-section">
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71kzOdM5AIL._SX679_.jpg" class="product-img" alt="Pet belt">
+    <div class="product-info">
+      <h2>Dog Belt</h2>
+      <p>Pawxie No Pull Dog Chest Belt Harness, Comfortable & Adjustable Size for 14-23 Kg Pet (Black, Medium)</p>
+      <p class="price">₹1499</p>
+      <p class="delivery">Delivery by Wed, 19 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dog Belt', 1499)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Pawxie</li>
+          <li><strong>Size:</strong> M (For 14-23kg pets)</li>
+          <li><strong>Color:</strong> Black</li>
+          <li><strong>Pattern:</strong> Solid</li>
+          <li><strong>Material:</strong> Durable Nylon</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Adjustable straps for perfect fit</li>
+              <li>Padded chest plate for comfort</li>
+              <li>Quick-release buckles</li>
+              <li>Reflective stitching for visibility</li>
+            </ul>
+          </li>
+          <li><strong>Recommended For:</strong> Medium-sized dogs</li>
+          <li><strong>Harness Type:</strong> Step-in design</li>
+          <li><strong>Closure Type:</strong> Buckle</li>
+          <li><strong>Care Instructions:</strong> Hand wash recommended</li>
+          <li><strong>Package Includes:</strong> 1 Dog Harness</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Pawxie Dog Harness">
+        ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">237</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Pawxie Dog Harness">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/41ldsfWx-AL._SX300_SY300_QL70_FMwebp_.jpg" class="product-img" alt="Lamp">
+    <div class="product-info">
+      <h2>Sound Ball</h2>
+      <p>24x7 eMall Dog Toy, Fun Sounds When Rolled or Shaken, Funny Sound Ball, Laughing Ball for Medium and Large Pet Dogs, 5.5 Inch Interactive Toy Ball</p>
+      <p class="price">₹499</p>
+      <p class="delivery">Delivery by Tue, 18 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Sound Ball', 499)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> 24x7 eMall</li>
+          <li><strong>Model Name:</strong> giggle-ball-green-5.5in-mfn</li>
+          <li><strong>Color:</strong> Green</li>
+          <li><strong>Toy Type:</strong> Ball</li>
+          <li><strong>Theme:</strong> Animals</li>
+          <li><strong>Breed Recommendation:</strong> Medium & Large Breeds</li>
+          <li><strong>Material:</strong> Durable Vinyl</li>
+          <li><strong>Item Weight:</strong> 100 Grams</li>
+          <li><strong>Size:</strong> 5.5 inches diameter</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Makes giggle sounds when rolled</li>
+              <li>Promotes mental stimulation</li>
+              <li>Encourages active play</li>
+              <li>Animal-themed surface patterns</li>
+            </ul>
+          </li>
+          <li><strong>Recommended Uses:</strong> Playing, Mental Health</li>
+          <li><strong>Safety:</strong> Non-toxic materials</li>
+          <li><strong>Net Quantity:</strong> 1 Count</li>
+          <li><strong>Care Instructions:</strong> Wipe clean with damp cloth</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="24x7 eMall Giggle Ball">
+        ⭐ <span class="avg-rating">4.2</span>/5 from <span class="rating-count">156</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="24x7 eMall Giggle Ball">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71yw1M3EWcL._SX679_.jpg" class="product-img" alt="Kitchen Stand">
+    <div class="product-info">
+      <h2>Cat Belt</h2>
+    <p>Buraq No Pull Cat Harness with Leash + 2 Pcs Cat Collar, Escape Proof, Ultra-Light Weight, Air Mesh Fabric, Aesthetic Design Adjustable Cat Leash with Harness (XS - Green)</p>
+      <p class="price">₹525</p>
+      <p class="delivery">Delivery by Fri, 21 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Cat Belt', 525)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> BURAQ</li>
+          <li><strong>Size:</strong> XS (Extra Small)</li>
+          <li><strong>Color:</strong> Black</li>
+          <li><strong>Material:</strong> Nylon with Mesh panels</li>
+          <li><strong>Closure Type:</strong> Buckle</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Breathable mesh for comfort</li>
+              <li>Adjustable straps for perfect fit</li>
+              <li>Durable nylon construction</li>
+              <li>Lightweight design</li>
+            </ul>
+          </li>
+          <li><strong>Recommended For:</strong> Small dog breeds and puppies</li>
+          <li><strong>Harness Type:</strong> Vest-style</li>
+          <li><strong>Safety:</strong> Reflective stitching for visibility</li>
+          <li><strong>Care Instructions:</strong> Hand wash recommended</li>
+          <li><strong>Package Includes:</strong> 1 Pet Harness</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="BURAQ Pet Harness">
+        ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">189</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="BURAQ Pet Harness">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61aLX1o00iL._SL1500_.jpg" class="product-img" alt="dog toy">
+    <div class="product-info">
+      <h2>Dog Chew Toy </h2>
+      <p>BarkButler x Fofos Woodplay Antler Dog Chew Toy,Brown|X-Small-Small(0-10kg)|Made with Real Wood Fiber|Natural Pine Scent|Splinter Free Chewing|Non-Toxic|for All Dog Breeds|Play,Chew,Fetch</p>
+      <p class="price">₹425</p>
+      <p class="delivery">Delivery by Mon, 17 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dog Chew Toy ', 425)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> BarkButler</li>
+          <li><strong>Toy Type:</strong> Chew Toy</li>
+          <li><strong>Theme:</strong> Animals</li>
+          <li><strong>Pattern:</strong> Woodplay Antler</li>
+          <li><strong>Color:</strong> Brown</li>
+          <li><strong>Material:</strong> Natural Wood</li>
+          <li><strong>Breed Recommendation:</strong> All Sizes</li>
+          <li><strong>Usage:</strong> Indoor</li>
+          <li><strong>Key Benefits:</strong>
+            <ul>
+              <li>Promotes dental health</li>
+              <li>Satisfies natural chewing instinct</li>
+              <li>Helps clean teeth</li>
+              <li>Provides mental stimulation</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Non-toxic materials</li>
+              <li>Splinter-free</li>
+              <li>Natural wood scent</li>
+            </ul>
+          </li>
+          <li><strong>Dimensions:</strong> Medium size (suitable for most breeds)</li>
+          <li><strong>Care Instructions:</strong> Wipe clean as needed</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="BarkButler Chew Toy">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">214</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="BarkButler Chew Toy">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<a class="back-link" href="homepage.html">← Back to Home</a>
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+ 
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function isUserLoggedIn() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null;
+  }
+
+  function showToast(message, type = "warning") {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => {
+      toast.className = "toast";
+    }, 3000);
+  }
+
+  
+</script>
+<script>
+  function isUserLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+  }
+
+  function showToast(message, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 3000);
+  }
+
+  function addToCart(productName, price) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn !== "true") {
+    showToast("Please login first to add items to cart", "warning");
+    
+    // Redirect to signin after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+
+    return false;
+  }
+
+  // Proceed to add to cart if logged in
+  showToast(`${productName} added to cart`, "success");
+  return true;
+}
+
+
+</script>
+<script>
+  function toggleDetails(button) {
+  const productBox = button.closest(".product-box");
+  const extra = productBox.querySelector(".product-extra");
+
+  if (extra.style.display === "none" || extra.style.display === "") {
+    // Close all other open details first
+    document.querySelectorAll(".product-extra").forEach(item => {
+      if (item !== extra) {
+        item.style.display = "none";
+        const otherBtn = item.closest(".product-box").querySelector(".btn-details");
+        if (otherBtn) otherBtn.textContent = "View Details";
+      }
+    });
+
+    extra.style.display = "block";
+    button.textContent = "Hide Details";
+  } else {
+    extra.style.display = "none";
+    button.textContent = "View Details";
+  }
+}
+
+  
+
+  function submitRating(select) {
+    const rating = parseInt(select.value);
+    const name = select.dataset.name;
+    if (!rating || !name) return;
+
+    alert(`You rated "${name}" ${rating} stars.`);
+    // Here you'd update average/count via backend or localStorage
+  }
+</script>
+
+<script>
+  function submitRating(select) {
+    const productName = select.getAttribute('data-name');
+    const rating = parseInt(select.value);
+    if (!rating || rating < 1 || rating > 5) return;
+
+    // Load current ratings
+    const storedRatings = JSON.parse(localStorage.getItem('ratings')) || {};
+    if (!storedRatings[productName]) {
+      storedRatings[productName] = [];
+    }
+
+    storedRatings[productName].push(rating);
+    localStorage.setItem('ratings', JSON.stringify(storedRatings));
+
+    updateRatingDisplay(productName);
+    alert("Thank you for your feedback!");
+  }
+
+  function updateRatingDisplay(productName) {
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    const productRatings = ratings[productName] || [];
+
+    const avg = productRatings.length
+      ? (productRatings.reduce((a, b) => a + b) / productRatings.length).toFixed(1)
+      : "0";
+
+    document.querySelectorAll(`.rating-display[data-name="${productName}"]`).forEach(display => {
+      display.querySelector('.avg-rating').innerText = avg;
+      display.querySelector('.rating-count').innerText = productRatings.length;
+    });
+  }
+
+  // Call on page load for each product (e.g., Jeans)
+  document.addEventListener("DOMContentLoaded", () => {
+    updateRatingDisplay("Jeans");
+  });
+</script> 
+</body>
+</html>

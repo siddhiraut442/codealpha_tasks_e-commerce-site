@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toys</title>
+
+  <style>
+      body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: start;
+      padding: 20px 0 10px;
+      color: #333;
+    }
+
+    .product-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 20px;
+  align-items: flex-start; /* Add this line */
+}
+
+.product-box {
+  background-color: white;
+  width: 23%;
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  display: flex; /* Add these lines */
+  flex-direction: column;
+  min-height: 0; /* Important for flex children */
+}
+
+.product-info {
+  padding: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+  flex: 1; /* Makes the info section take available space */
+  min-height: 0; /* Important for flex children */
+}
+
+    /* .product-box:hover {
+      transform: scale(1.03);
+    } */
+
+    .product-img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      background-color: #f4f4f4;
+    }
+
+    
+    .product-info h2 {
+      font-size: 16px;
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    .delivery {
+      color: green;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    a.back-link {
+      display: block;
+      text-align: center;
+      margin: 40px 0 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    a.back-link:hover {
+      color: #0052a3;
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        width: 45%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-box {
+        width: 90%;
+      }
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      border-radius: 6px;
+      padding: 12px 20px;
+      position: fixed;
+      z-index: 1000;
+      bottom: 30px;
+      right: 30px;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .view-details-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* removes underline */
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+}
+
+.view-details-btn:hover {
+  background-color: #116313;
+}
+.btn-cart {
+  flex: 1;
+  background-color: #ffa41c; /* orange */
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cart:hover {
+  background-color: #f08804;
+}
+
+.btn-details {
+  flex: 1;
+  background-color: #22a63a; 
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-details:hover {
+  background-color: #095f30;
+}
+
+  .product-extra {
+    transition: all 0.3s ease;
+  }
+
+  .product-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+  }
+
+  .product-info ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .toast {
+  /* ... existing styles ... */
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.toast.warning {
+  background-color: #ff9800 !important;
+}
+
+.toast.success {
+  background-color: #4CAF50 !important;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <h2>MusicaL Toy Instuments</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71ECnhCb51L._SL1500_.jpg" class="product-img" alt="drum">
+      <div class="product-info">
+        <h2>Drum Set</h2>
+        <p>Kidsmate Lil’ Beats Drum Set for Kids | Musical Toy Set with 3 Drums, 1 Cymbal, Drumsticks & Stool | Durable Plastic Learning Toy Music Instrument for Boys & Girls for 3 Years & Above - Multicolor</p>
+        <p class="price">₹999</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Drum Set', 999)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Kidsmate</li>
+          <li><strong>Product Name:</strong> Lil' Beats Drum Set</li>
+          <li><strong>Age Range:</strong> 3 years & above</li>
+          <li><strong>Color:</strong> Multicolor</li>
+          <li><strong>Material:</strong> Durable Plastic</li>
+          <li><strong>Set Includes:</strong>
+            <ul>
+              <li>3 Drums (different sizes)</li>
+              <li>1 Cymbal</li>
+              <li>Pair of Drumsticks</li>
+              <li>Adjustable Stool</li>
+            </ul>
+          </li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Develops musical skills</li>
+              <li>Improves hand-eye coordination</li>
+              <li>Encourages rhythm recognition</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>Lightweight design</li>
+            </ul>
+          </li>
+          <li><strong>Product Dimensions:</strong> Compact size for kids</li>
+          <li><strong>Assembly:</strong> Easy setup (tools not required)</li>
+          <li><strong>Warranty:</strong> 6 months manufacturer warranty</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Kidsmate Drum Set">
+        ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">328</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Kidsmate Drum Set">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51olPDPJCTL._SL1100_.jpg" class="product-img" alt="guitar">
+      <div class="product-info">
+        <h2>Guitar</h2>
+        <p>Toy Imagine 4 String Kids Guitar | Musical Instrument Toy for Boys & Girls | Baby Ukulele Style Toy for 2-10 Years | Beginner Gift for Children | Mini Acoustic Learning Toy for Toddlers</p>
+        <p class="price">₹295</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Guitar', 295)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+  
+    <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Toy Imagine</li>
+          <li><strong>Type:</strong> 4-String Mini Guitar</li>
+          <li><strong>Style:</strong> Ukulele Design</li>
+          <li><strong>Age Range:</strong> 2-10 Years</li>
+          <li><strong>Color Options:</strong> Multiple colors available</li>
+          <li><strong>Material:</strong> Child-safe plastic & nylon strings</li>
+          <li><strong>Size:</strong> Perfect toddler size (approx. 45cm)</li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Introduces basic musical concepts</li>
+              <li>Develops hand-eye coordination</li>
+              <li>Encourages rhythm and creativity</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>Soft nylon strings</li>
+            </ul>
+          </li>
+          <li><strong>Includes:</strong> Mini guitar picks (2 pieces)</li>
+          <li><strong>Ideal For:</strong> Birthday gifts, early music education</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Toy Imagine Kids Guitar">
+        ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">287</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Toy Imagine Kids Guitar">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71wtNAEfGEL._SX679_.jpg" class="product-img" alt="casio">
+      <div class="product-info">
+        <h2>Casio</h2>
+        <p>VEBETO Kids Piano with Mic (1 Year Warranty) 37 Keys 8 Rhythms 8 Tones 6 Demos Portable Electronic Keyboard Toy Beginners Educational Songs Recording Musical Toys Age 2 3 4 5 Years Boys Girls</p>
+        <p class="price">₹897</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Casio', 897)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> VEBETO</li>
+          <li><strong>Warranty:</strong> 1 Year Manufacturer Warranty</li>
+          <li><strong>Keyboard:</strong> 37 Keys</li>
+          <li><strong>Features:</strong>
+            <ul>
+              <li>8 Rhythms</li>
+              <li>8 Tones</li>
+              <li>6 Demo Songs</li>
+              <li>Recording Function</li>
+              <li>Built-in Microphone</li>
+            </ul>
+          </li>
+          <li><strong>Age Range:</strong> 2-5 Years</li>
+          <li><strong>Power:</strong> 3 AA Batteries (Not Included)</li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Develops musical talent</li>
+              <li>Improves hand-eye coordination</li>
+              <li>Encourages creativity</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Non-toxic materials</li>
+              <li>Rounded corners</li>
+              <li>Volume control</li>
+            </ul>
+          </li>
+          <li><strong>Dimensions:</strong> Compact & portable design</li>
+          <li><strong>Includes:</strong> Keyboard, microphone, user manual</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="VEBETO Kids Piano">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">412</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="VEBETO Kids Piano">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71f7gG5WD0L._SX679_.jpg" class="product-img" alt="Xylophone">
+      <div class="product-info">
+        <h2>Xylophone</h2>
+        <p>Mommers Xylophone Musical Educational Toy for Kid (1-3Year Old) I Toddlers Babies Kids Girls, Boys I 2-in-1 Piano Combined I Safe for Drum Sticks for Fast and Fun Learning for Kid- Pink</p>
+        <p class="price">₹200</p>
+        <p class="delivery">Delivery by Mon, 17 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Xylophone', 200)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Mommers</li>
+          <li><strong>Age Range:</strong> 1-3 Years</li>
+          <li><strong>Color:</strong> Pink</li>
+          <li><strong>Type:</strong> 2-in-1 Xylophone & Piano</li>
+          <li><strong>Includes:</strong> 2 Safe Drum Sticks</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Dual-function musical toy</li>
+              <li>Bright, colorful keys</li>
+              <li>Perfect for small hands</li>
+              <li>Develops early musical skills</li>
+            </ul>
+          </li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Improves hand-eye coordination</li>
+              <li>Develops rhythm recognition</li>
+              <li>Encourages sensory development</li>
+              <li>Stimulates auditory skills</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Non-toxic materials</li>
+              <li>Rounded edges</li>
+              <li>Child-safe drum sticks</li>
+              <li>Lightweight design</li>
+            </ul>
+          </li>
+          <li><strong>Dimensions:</strong> Compact size perfect for toddlers</li>
+          <li><strong>Warranty:</strong> 6 months manufacturer warranty</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Mommers Xylophone Toy">
+        ⭐ <span class="avg-rating">4.7</span>/5 from <span class="rating-count">538</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Mommers Xylophone Toy">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Soft Toys</h2>
+  <div class="product-section">
+    
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51gnPsVL0bL._SL1100_.jpg" class="product-img" alt="dice cube">
+      <div class="product-info">
+        <h2>Dice Cube</h2>
+        <p>Atpata Funky Jumbo 8 inch Plush Toy Dice Cube - Soft Velvet Fur, Lightweight & Washable - Unisex Family Entertainer for All Ages - Color & Number Recognition Fun!</p>
+        <p class="price">₹996</p>
+        <p class="delivery">Delivery by Thu, 20 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dice Cube', 996)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Atpata</li>
+          <li><strong>Size:</strong> Jumbo 8-inch cube</li>
+          <li><strong>Material:</strong> Soft Velvet Fur</li>
+          <li><strong>Weight:</strong> Lightweight design</li>
+          <li><strong>Care:</strong> Machine washable</li>
+          <li><strong>Age Range:</strong> All ages (3+ recommended)</li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Color recognition</li>
+              <li>Number learning</li>
+              <li>Counting practice</li>
+              <li>Basic math concepts</li>
+            </ul>
+          </li>
+          <li><strong>Game Ideas:</strong>
+            <ul>
+              <li>Family board games</li>
+              <li>Movement activities</li>
+              <li>Learning games</li>
+              <li>Party games</li>
+            </ul>
+          </li>
+          <li><strong>Safety Features:</strong>
+            <ul>
+              <li>Soft, plush construction</li>
+              <li>No small parts</li>
+              <li>Non-toxic materials</li>
+            </ul>
+          </li>
+          <li><strong>Color Options:</strong> Multiple vibrant colors available</li>
+          <li><strong>Versatility:</strong> Great for classrooms, homes, and therapy</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Atpata Plush Dice">
+        ⭐ <span class="avg-rating">4.8</span>/5 from <span class="rating-count">672</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Atpata Plush Dice">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/71H3fgBaEdL._SL1500_.jpg" class="product-img" alt="Rabbit">
+      <div class="product-info">
+        <h2>Rabbit</h2>
+        <p>Fuzzbuzz Strawberry Bunny – Soft & Huggable Plush Toy for Kids, Multicolor, 3Y+</p>
+        <p class="price">₹899</p>
+        <p class="delivery">Delivery by Wed, 19 June</p>
+        <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Soft & Huggable Plush Rabbit Toy', 899)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Fuzzbuzz</li>
+          <li><strong>Character:</strong> Strawberry Bunny</li>
+          <li><strong>Color:</strong> Multicolor</li>
+          <li><strong>Age Range:</strong> 3 years and above</li>
+          <li><strong>Material:</strong> Ultra-soft plush fabric</li>
+          <li><strong>Size:</strong> Perfect hugging size (approx. 12 inches)</li>
+          <li><strong>Features:</strong>
+            <ul>
+              <li>Extra soft and squishy</li>
+              <li>Strawberry-themed design</li>
+              <li>Bright, cheerful colors</li>
+              <li>Perfect companion toy</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Child-safe materials</li>
+              <li>Reinforced stitching</li>
+              <li>No small detachable parts</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Surface wash recommended</li>
+          <li><strong>Perfect For:</strong> Cuddling, imaginative play, bedtime companion</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Fuzzbuzz Strawberry Bunny">
+        ⭐ <span class="avg-rating">4.9</span>/5 from <span class="rating-count">892</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Fuzzbuzz Strawberry Bunny">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51AWNa6+TOL._SX679_.jpg" class="product-img" alt="unicorn">
+      <div class="product-info">
+        <h2>Unicorn</h2>
+        <p>Babique Unicorn Teddy Bear Plush Soft Toy Cute Kids Birthday Animal Baby Boys/Girls (25 cm, Pink)</p>
+        <p class="price">₹170</p>
+        <p class="delivery">Delivery by Tue, 18 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Unicorn Soft Toy', 170)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Rushi Enterprise</li>
+          <li><strong>Model Number:</strong> CH-UNICORN-YLW</li>
+          <li><strong>Color:</strong> Unicorn Yellow</li>
+          <li><strong>Age Range:</strong> 1 month - 20 years</li>
+          <li><strong>Material:</strong> Polyester & Wool blend</li>
+          <li><strong>Dimensions:</strong> 30 x 10 x 4 cm</li>
+          <li><strong>Weight:</strong> 90 grams (Ultra-lightweight)</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>No assembly required</li>
+              <li>Battery-free design</li>
+              <li>Super soft texture</li>
+              <li>Perfect cuddling size</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Baby-safe materials</li>
+              <li>Reinforced stitching</li>
+              <li>Hypoallergenic</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Hand wash recommended</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Perfect For:</strong> Newborns, toddlers, and collectors</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Unicorn Plush Toy">
+        ⭐ <span class="avg-rating">4.7</span>/5 from <span class="rating-count">523</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Unicorn Plush Toy">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="product-box">
+      <img src="https://m.media-amazon.com/images/I/51h6wRH0lpL._SX679_.jpg" class="product-img" alt="dog">
+      <div class="product-info">
+        <h2>Dog</h2>
+        <p>Babique Dog Sitting Plush Soft Toy Cute Kids Animal Home Decor Boys/Girls White (25 cm)</p>
+        <p class="price">₹500</p>
+        <p class="delivery">Delivery by Fri, 21 June</p>
+         <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Dog Soft Toy', 500)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Rushi Enterprise</li>
+          <li><strong>Model Number:</strong> CH-PUPY DOG WHITE</li>
+          <li><strong>Color:</strong> Dog White</li>
+          <li><strong>Age Range:</strong> 6 months - 12 years</li>
+          <li><strong>Material:</strong> Soft Fabric</li>
+          <li><strong>Dimensions:</strong> 25 x 14 x 10 cm (Perfect cuddle size)</li>
+          <li><strong>Weight:</strong> 100 grams (Lightweight)</li>
+          <li><strong>Features:</strong>
+            <ul>
+              <li>No assembly required</li>
+              <li>Battery-free</li>
+              <li>Huggable design</li>
+              <li>Classic puppy look</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Baby-safe materials</li>
+              <li>Durable stitching</li>
+              <li>No small parts</li>
+            </ul>
+          </li>
+          <li><strong>Care Instructions:</strong> Surface clean with damp cloth</li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Perfect For:</strong> First toy, comfort companion, gift</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Puppy Dog Plush Toy">
+        ⭐ <span class="avg-rating">4.6</span>/5 from <span class="rating-count">387</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Puppy Dog Plush Toy">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+<h2>Toy Vehicles</h2>
+<div class="product-section">
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71JNfh4tTyL._SX679_.jpg" class="product-img" alt="jcb">
+    <div class="product-info">
+      <h2>Bulldozer</h2>
+      <p>PRIME DEALS 2 In 1 Bulldozer And Excavator Construction Toy Vehicle - Yellow (Bulldozer And Excavator), Kid</p>
+      <p class="price">₹224</p>
+      <p class="delivery">Delivery by Wed, 19 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Bulldozer', 224)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+ <div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Ozean World</li>
+          <li><strong>Model Number:</strong> OzW-ExcavatorToy</li>
+          <li><strong>Color:</strong> Yellow</li>
+          <li><strong>Age Range:</strong> 24 months and up</li>
+          <li><strong>Dimensions:</strong> 17.8 x 13.8 x 11.4 cm</li>
+          <li><strong>Weight:</strong> 190 grams</li>
+          <li><strong>Material:</strong> Durable child-safe plastic</li>
+          <li><strong>Features:</strong>
+            <ul>
+              <li>Moving excavator arm</li>
+              <li>Realistic construction vehicle design</li>
+              <li>Smooth-rolling wheels</li>
+              <li>Sturdy construction</li>
+            </ul>
+          </li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Develops motor skills</li>
+              <li>Encourages imaginative play</li>
+              <li>Teaches cause-and-effect</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>No small detachable parts</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> China</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Ozean World Excavator">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">276</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Ozean World Excavator">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/51uB7i1cw+L._SL1000_.jpg" class="product-img" alt="auto">
+    <div class="product-info">
+      <h2>Auto</h2>
+      <p>Centy Toys Plastic Pull Back Auto Rickshaw, Number Of Pieces: 1, Multicolour, 36 Months</p>
+      <p class="price">₹124</p>
+      <p class="delivery">Delivery by Tue, 18 June</p>
+  <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart(' Plastic Auto', 124)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Centy Toys</li>
+          <li><strong>Model Number:</strong> CT-056</li>
+          <li><strong>Color:</strong> Yellow/Green Dual-tone</li>
+          <li><strong>Age Range:</strong> 3 years and up</li>
+          <li><strong>Dimensions:</strong> 11.5 x 6 x 4 cm (Pocket-sized)</li>
+          <li><strong>Weight:</strong> 50 grams (Ultra-lightweight)</li>
+          <li><strong>Material:</strong> Durable child-safe plastic</li>
+          <li><strong>Features:</strong>
+            <ul>
+              <li>Smooth-rolling wheels</li>
+              <li>Detailed miniature design</li>
+              <li>Perfect for small hands</li>
+            </ul>
+          </li>
+          <li><strong>Educational Benefits:</strong>
+            <ul>
+              <li>Develops fine motor skills</li>
+              <li>Encourages imaginative play</li>
+              <li>Teaches vehicle recognition</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>No small detachable parts</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Collection:</strong> Part of miniature vehicles series</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Centy Mini Vehicle">
+        ⭐ <span class="avg-rating">4.3</span>/5 from <span class="rating-count">158</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Centy Mini Vehicle">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/61GDrxzlW3L._SX679_.jpg" class="product-img" alt="ambulance">
+    <div class="product-info">
+      <h2>Ambulance</h2>
+    <p>Centy Toys Tmp 207 Ambulance,Plastic,White, Kid</p>
+      <p class="price">₹259</p>
+      <p class="delivery">Delivery by Fri, 21 June</p>
+      <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart(' Plastic Ambulance', 259)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Centy Toys</li>
+          <li><strong>Model Number:</strong> CT-153</li>
+          <li><strong>Color:</strong> Classic White</li>
+          <li><strong>Age Range:</strong> 3-15 years</li>
+          <li><strong>Dimensions:</strong> 14.8 x 5.5 x 7.2 cm</li>
+          <li><strong>Weight:</strong> 119 grams</li>
+          <li><strong>Material:</strong> High-quality, durable plastic</li>
+          <li><strong>Design Features:</strong>
+            <ul>
+              <li>Sleek white finish</li>
+              <li>Smooth-rolling wheels</li>
+              <li>Realistic vehicle details</li>
+              <li>Perfect hand-held size</li>
+            </ul>
+          </li>
+          <li><strong>Educational Value:</strong>
+            <ul>
+              <li>Develops fine motor skills</li>
+              <li>Encourages imaginative play</li>
+              <li>Teaches vehicle mechanics</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>Sturdy construction</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Collection:</strong> Part of Centy's premium vehicle series</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Centy White Vehicle">
+        ⭐ <span class="avg-rating">4.4</span>/5 from <span class="rating-count">192</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Centy White Vehicle">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="product-box">
+    <img src="https://m.media-amazon.com/images/I/71LwRwhwlQL._SX679_.jpg" class="product-img" alt="Car">
+    <div class="product-info">
+      <h2>Car</h2>
+      <p>Chanak Premium Metal Die-Cast Sports Racer Metal Car with Realistic Engine Sound, LED Lights, Open & Close Doors, Pull Back Car Zinc Alloy for Kids Above 3 Years, BIS Approved (Black)</p>
+      <p class="price">₹399</p>
+      <p class="delivery">Delivery by Mon, 17 June</p>
+       <div style="display: flex; gap: 20px; margin-top: 10px;">
+ <button class="btn-cart" onclick="return addToCart('Plastic Car', 399)">Add to Cart</button>
+  <button class="btn-details" onclick="toggleDetails(this)">View Details</button>
+</div>
+<div class="product-extra" style="display: none; margin-top: 10px;">
+      <div class="product-details">
+        <ul>
+          <li><strong>Brand:</strong> Aditi Toys Pvt Ltd</li>
+          <li><strong>Color:</strong> Sleek Black</li>
+          <li><strong>Age Range:</strong> 12 months and up</li>
+          <li><strong>Dimensions:</strong> 15.8 x 11 x 7.8 cm</li>
+          <li><strong>Weight:</strong> 160 grams</li>
+          <li><strong>Material:</strong> Durable, child-safe plastic</li>
+          <li><strong>Key Features:</strong>
+            <ul>
+              <li>Smooth-gliding wheels</li>
+              <li>Ergonomic design for small hands</li>
+              <li>Realistic vehicle styling</li>
+              <li>Sturdy construction</li>
+            </ul>
+          </li>
+          <li><strong>Developmental Benefits:</strong>
+            <ul>
+              <li>Encourages crawling and movement</li>
+              <li>Develops hand-eye coordination</li>
+              <li>Stimulates imaginative play</li>
+            </ul>
+          </li>
+          <li><strong>Safety:</strong>
+            <ul>
+              <li>Rounded edges</li>
+              <li>Non-toxic materials</li>
+              <li>No small detachable parts</li>
+            </ul>
+          </li>
+          <li><strong>Country of Origin:</strong> India</li>
+          <li><strong>Ideal For:</strong> First birthday gifts, toddler playtime</li>
+        </ul>
+      </div>
+
+      <div class="rating-display" data-name="Aditi Black Vehicle">
+        ⭐ <span class="avg-rating">4.5</span>/5 from <span class="rating-count">231</span> ratings
+      </div>
+
+      <div class="rate-product" style="margin-top: 8px;">
+        <label>Rate this product:</label>
+        <select onchange="submitRating(this)" data-name="Aditi Black Vehicle">
+          <option value="">--Select--</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<a class="back-link" href="homepage.html">← Back to Home</a>
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+ 
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function isUserLoggedIn() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user !== null;
+  }
+
+  function showToast(message, type = "warning") {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => {
+      toast.className = "toast";
+    }, 3000);
+  }
+
+  
+</script>
+<script>
+  function isUserLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
+  }
+
+  function showToast(message, type = "success") {
+    let toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("show");
+    }, 100);
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.remove();
+    }, 3000);
+  }
+
+  function addToCart(productName, price) {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn !== "true") {
+    showToast("Please login first to add items to cart", "warning");
+    
+    // Redirect to signin after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+
+    return false;
+  }
+
+  // Proceed to add to cart if logged in
+  showToast(`${productName} added to cart`, "success");
+  return true;
+}
+
+
+</script>
+<script>
+  function toggleDetails(button) {
+  const productBox = button.closest(".product-box");
+  const extra = productBox.querySelector(".product-extra");
+
+  if (extra.style.display === "none" || extra.style.display === "") {
+    // Close all other open details first
+    document.querySelectorAll(".product-extra").forEach(item => {
+      if (item !== extra) {
+        item.style.display = "none";
+        const otherBtn = item.closest(".product-box").querySelector(".btn-details");
+        if (otherBtn) otherBtn.textContent = "View Details";
+      }
+    });
+
+    extra.style.display = "block";
+    button.textContent = "Hide Details";
+  } else {
+    extra.style.display = "none";
+    button.textContent = "View Details";
+  }
+}
+
+  
+
+  function submitRating(select) {
+    const rating = parseInt(select.value);
+    const name = select.dataset.name;
+    if (!rating || !name) return;
+
+    alert(`You rated "${name}" ${rating} stars.`);
+    // Here you'd update average/count via backend or localStorage
+  }
+</script>
+
+<script>
+  function submitRating(select) {
+    const productName = select.getAttribute('data-name');
+    const rating = parseInt(select.value);
+    if (!rating || rating < 1 || rating > 5) return;
+
+    // Load current ratings
+    const storedRatings = JSON.parse(localStorage.getItem('ratings')) || {};
+    if (!storedRatings[productName]) {
+      storedRatings[productName] = [];
+    }
+
+    storedRatings[productName].push(rating);
+    localStorage.setItem('ratings', JSON.stringify(storedRatings));
+
+    updateRatingDisplay(productName);
+    alert("Thank you for your feedback!");
+  }
+
+  function updateRatingDisplay(productName) {
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    const productRatings = ratings[productName] || [];
+
+    const avg = productRatings.length
+      ? (productRatings.reduce((a, b) => a + b) / productRatings.length).toFixed(1)
+      : "0";
+
+    document.querySelectorAll(`.rating-display[data-name="${productName}"]`).forEach(display => {
+      display.querySelector('.avg-rating').innerText = avg;
+      display.querySelector('.rating-count').innerText = productRatings.length;
+    });
+  }
+
+  // Call on page load for each product (e.g., Jeans)
+  document.addEventListener("DOMContentLoaded", () => {
+    updateRatingDisplay("Jeans");
+  });
+</script> 
+</body>
+</html>

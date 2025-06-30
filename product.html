@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #e8f0fe;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1a1a1a;
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .nav-search select,
+    .nav-search input {
+      border: none;
+      padding: 8px;
+      outline: none;
+    }
+
+    .search-icon {
+      background-color: #ffa41c;
+      padding: 8px 10px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .auth-links a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    .auth-links a:hover {
+      color: #005bb5;
+    }
+
+    .product-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .product-container h2 {
+      color: #570551;
+      margin-bottom: 10px;
+    }
+
+    .product-container p {
+      margin: 10px 0;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #b12704;
+      font-size: 18px;
+    }
+
+    .add-cart-btn {
+      background-color: #ffa41c;
+      color: black;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .add-cart-btn:hover {
+      background-color: #f08804;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #0073e6;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      color: #005bb5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-logo">Shopease</div>
+    <div class="nav-search">
+      <select>
+        <option value="All">All</option>
+      </select>
+      <input type="text" placeholder="Search"/>
+      <div class="search-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+    <div class="auth-links">
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </div>
+
+  <!-- Product Details -->
+  <div class="product-container" id="product">Loading...</div>
+
+  <a class="back-link" href="index.html">← Back to Home</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    fetch("http://localhost:3000/products")
+      .then(res => res.json())
+      .then(products => {
+        const product = products.find(p => p.id == productId);
+        if (product) {
+          document.getElementById("product").innerHTML = `
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p class="price">₹${product.price}</p>
+            <button class="add-cart-btn" onclick='addToCart(${JSON.stringify(product)})'>Add to Cart</button>
+          `;
+        } else {
+          document.getElementById("product").innerHTML = "<p>Product not found.</p>";
+        }
+      });
+
+    function addToCart(product) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Product added to cart!");
+    }
+  </script>
+</body>
+</html>

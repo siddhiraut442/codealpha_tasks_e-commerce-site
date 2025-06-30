@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+  <style>
+   body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 25px 35px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color:#667eea;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    } 
+  </style>
+</head>
+<body>
+ <div class="container">
+  <h2>Register</h2>
+
+  <input id="name" placeholder="Name"><br>
+  <input id="email" placeholder="Email"><br>
+  <input id="password" type="password" placeholder="Password"><br>
+
+  <button onclick="register()">Register</button>
+  <div id="message" class="message"></div>
+</div>
+
+<script>
+  function register() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const messageBox = document.getElementById("message");
+
+  if (!name || !email || !password) {
+    messageBox.textContent = "Please fill in all fields.";
+    messageBox.className = "message error";
+    return;
+  }
+
+  fetch("http://localhost:3000/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password }) // ✅ include name
+  })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Unknown error");
+      return data;
+    })
+    .then(data => {
+      localStorage.setItem("user", JSON.stringify({ email, userId: data.userId }));
+      messageBox.textContent = "Registration successful!";
+      messageBox.className = "message success";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
+    })
+    .catch(err => {
+  messageBox.textContent = err.message;
+  messageBox.className = "message error";
+
+  if (err.message === "User already registered") {
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500); // redirect after 1.5s
+  }
+});
+
+}
+</script>
+
+</body>
+</html>
