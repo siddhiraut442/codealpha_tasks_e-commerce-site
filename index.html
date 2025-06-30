@@ -94,7 +94,7 @@
   </div>
 
   <script>
-    // Basic cart functions needed for login page
+    
     function getCart() {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const cartKey = user.userId ? `cart_${user.userId}` : 'guest_cart';
@@ -167,7 +167,7 @@ function addToCart(name, price, image = '', id = null) {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Migrate guest cart to user cart
+      
       const guestCart = JSON.parse(localStorage.getItem('guest_cart') || '[]');
       if (guestCart.length > 0) {
         localStorage.setItem(`cart_${data.userId}`, JSON.stringify(guestCart));
@@ -177,7 +177,7 @@ function addToCart(name, price, image = '', id = null) {
       messageBox.textContent = "Login successful!";
       messageBox.className = "message success";
 
-      // Force all pages to update their cart count
+      
       localStorage.setItem('cart_update_trigger', Date.now().toString());
 
       setTimeout(() => {
