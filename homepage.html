@@ -384,5 +384,24 @@
     </div>
   </div>
 </div>
+  <script>
+  const categorySelect = document.getElementById("category-select");
+  const boxes = document.querySelectorAll(".box");
+
+  categorySelect.addEventListener("change", () => {
+    const selected = categorySelect.value.toLowerCase();
+
+    boxes.forEach(box => {
+      const category = box.getAttribute("data-category").toLowerCase();
+      if (!selected || category === selected) {
+        box.style.display = "block";
+        box.classList.add("highlight");
+      } else {
+        box.style.display = "none";
+        box.classList.remove("highlight");
+      }
+    });
+  });
+</script>
 </body>
 </html>
